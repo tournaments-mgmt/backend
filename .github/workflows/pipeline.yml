@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker image build . --file Dockerfile --target=prod --tag "tournaments-mgmt-backend:${GITHUB_REF}" .
+        run: docker build . --file Dockerfile --target=prod --tag "tournaments-mgmt-backend:${GITHUB_REF}" .
