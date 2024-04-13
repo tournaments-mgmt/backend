@@ -1,0 +1,8 @@
+[submodule "odoo"]
+	path = odoo
+	url = https://github.com/OCA/OCB.git
+	branch = 16.0
+[submodule "web"]
+	path = web
+	url = https://github.com/OCA/web.git
+	branch = 16.0
