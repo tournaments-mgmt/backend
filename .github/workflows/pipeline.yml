@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: "true"
       - name: Build the Docker image
         run: docker image build . --file Dockerfile --target=prod --tag "tournaments-mgmt-backend:${GITHUB_REF_NAME}"
