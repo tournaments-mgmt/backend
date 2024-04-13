@@ -25,4 +25,4 @@ jobs:
         with:
           push: true
           target: prod
-          tags: tournaments-mgmt-backend:${GITHUB_REF##*/}
+          tags: "tournaments-mgmt-backend:${GITHUB_REF##*/}"
