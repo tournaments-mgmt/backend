@@ -1,0 +1,126 @@
+diff --git a/update_probe/main.py b/update_probe/main.py
+index 24c3a1e..e39595a 100644
+--- a/update_probe/main.py
++++ b/update_probe/main.py
+@@ -1,12 +1,12 @@
+-import datetime
+ import json
+ import os.path
++import socket
+ import sys
+ import time
+ from typing import List, Optional
+ 
+ from kubernetes import client, config
+-from kubernetes.client import V1PodTemplateSpec, ApiException
++from kubernetes.client import ApiException
+ 
+ KUBECTL_CONFIG_FILES: List[str] = [
+     os.path.join(os.environ.get("HOME", ""), ".kube", "config"),
+@@ -99,6 +99,9 @@ class BaseUpdateProbe:
+     def _configure_kube_clients(self) -> None:
+         log_step("Configuring k8s clients")
+ 
++        config.load_kube_config()
++        return
++
+         try:
+             log("Trying to load in cluster config")
+             config.load_incluster_config()
+@@ -136,41 +139,61 @@ class BaseUpdateProbe:
+             raise ValueError("Unable to create CoreV1Api")
+ 
+     def _create_job_if_not_running_save_current_job_name(self) -> None:
+-        log_step("Creating new Job (if not already running)")
+-
+-        active_jobs = self._get_jobs()
+-        log(f"Active jobs count: {len(active_jobs)}")
+-
+-        if len(active_jobs) == 1:
+-            active_job = active_jobs[0]
+-            self._current_job_name = active_job.metadata.name
+-            log(f"Job already found: {self._current_job_name}")
+-            return
+-
+-        if len(active_jobs) > 1:
+-            raise ValueError("Multiple job running")
+-
+-        log(f"Reading Job template: {self._job_template_name}")
+-        pod_template: V1PodTemplateSpec = self._kube_core.read_namespaced_pod_template(
+-            namespace=self._namespace,
+-            name=self._job_template_name
+-        )
+-
+-        log(f"Computing job name")
+-        dt_now: datetime.datetime = datetime.datetime.now()
+-        date_tag: str = dt_now.strftime("%Y%m%d")
+-        time_tag: str = dt_now.strftime("%H%M%S")
+-        job_name: str = "-".join([self._job_name_prefix, date_tag, time_tag, self._job_name_suffix])
+-
+-        log(f"Creating job")
+-        job_meta = client.V1ObjectMeta(name=job_name)
+-        job_spec = client.V1JobSpec(template=pod_template.template, backoff_limit=1, completions=1, parallelism=1)
+-        job = client.V1Job(api_version="batch/v1", kind="Job", metadata=job_meta, spec=job_spec)
+-        self._kube_batch.create_namespaced_job(namespace=self._namespace, body=job)
+-
+-        log(f"Job \"{job_name}\" started in namespace \"{self._namespace}\"")
+-
+-        self._current_job_name = job_name
++        current_hostname: str = socket.gethostname()
++
++        current_pod = next(filter(
++            lambda x: x.metadata.name == current_hostname,
++            self._kube_core.list_namespaced_pod(namespace=self._namespace).items
++        ), None)
++        if not current_pod:
++            raise ValueError("Unable to find myself")
++
++        image_id: str = current_pod.status.container_statuses[0].image_id
++        log(f"Image ID: {image_id}")
++
++        job_list = list(filter(
++            lambda x: x.status.container_statuses[0].image_id == image_id,
++            self._kube_batch.list_namespaced_job(namespace=self._namespace).items
++        ))
++        log(f"Jobs count: {len(job_list)}")
++
++
++    # def _create_job_if_not_running_save_current_job_name(self) -> None:
++    #     log_step("Creating new Job (if not already running)")
++    #
++    #     active_jobs = self._get_jobs()
++    #     log(f"Active jobs count: {len(active_jobs)}")
++    #
++    #     if len(active_jobs) == 1:
++    #         active_job = active_jobs[0]
++    #         self._current_job_name = active_job.metadata.name
++    #         log(f"Job already found: {self._current_job_name}")
++    #         return
++    #
++    #     if len(active_jobs) > 1:
++    #         raise ValueError("Multiple job running")
++    #
++    #     log(f"Reading Job template: {self._job_template_name}")
++    #     pod_template: V1PodTemplateSpec = self._kube_core.read_namespaced_pod_template(
++    #         namespace=self._namespace,
++    #         name=self._job_template_name
++    #     )
++    #
++    #     log(f"Computing job name")
++    #     dt_now: datetime.datetime = datetime.datetime.now()
++    #     date_tag: str = dt_now.strftime("%Y%m%d")
++    #     time_tag: str = dt_now.strftime("%H%M%S")
++    #     job_name: str = "-".join([self._job_name_prefix, date_tag, time_tag, self._job_name_suffix])
++    #
++    #     log(f"Creating job")
++    #     job_meta = client.V1ObjectMeta(name=job_name)
++    #     job_spec = client.V1JobSpec(template=pod_template.template, backoff_limit=1, completions=1, parallelism=1)
++    #     job = client.V1Job(api_version="batch/v1", kind="Job", metadata=job_meta, spec=job_spec)
++    #     self._kube_batch.create_namespaced_job(namespace=self._namespace, body=job)
++    #
++    #     log(f"Job \"{job_name}\" started in namespace \"{self._namespace}\"")
++    #
++    #     self._current_job_name = job_name
+ 
+     def _wait_for_job_completion(self) -> None:
+         log_step("Waiting for Job completion")
