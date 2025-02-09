@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_game_list" model="ir.ui.view">
+        <field name="name">tournaments.game: List view</field>
+        <field name="model">tournaments.game</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="tag"/>
+                <field name="year" widget="integer" options="{'format': 0}"/>
+                <field name="logo_image" widget="image" options="{'size': [48, 48]}"/>
+                <field string="PEGI Age Label" name="pegi_age_logo" widget="image" options="{'size': [43, 48]}"/>
+                <field name="pegi_content_descriptor_ids"
+                       widget="many2many_tags_avatar"
+                       options="{'avatarField': 'logo'}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_game_form" model="ir.ui.view">
+        <field name="name">tournaments.game: Form view</field>
+        <field name="model">tournaments.game</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <label for="tag"/>
+                    <h2 class="w-50">
+                        <field name="tag"/>
+                    </h2>
+                    <group name="group_info" string="Info" col="4">
+                        <field name="year" options="{'format': 0}"/>
+                        <field name="supported_platform_ids"
+                               widget="many2many_tags"/>
+                    </group>
+                    <group name="group_images" string="Images" col="4">
+                        <field name="logo_image" widget="image" options="{'size': [64, 64]}"/>
+                        <field name="background_image" widget="image" options="{'size': [192, 108]}"/>
+                    </group>
+                    <group name="group_pegi" string="PEGI Ratings">
+                        <field name="pegi_age_id"/>
+                        <field name="pegi_content_descriptor_ids"/>
+                    </group>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_game_search" model="ir.ui.view">
+        <field name="name">tournaments.game: Search view</field>
+        <field name="model">tournaments.game</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="tag"/>
+                <field name="year"/>
+                <separator/>
+                <field name="active"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

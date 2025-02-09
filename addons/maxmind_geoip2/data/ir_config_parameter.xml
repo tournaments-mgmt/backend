@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="1">
+
+    <record id="data_ir_config_parameter_maxmind_db_city_path" model="ir.config_parameter">
+        <field name="key">maxmind.db.city.path</field>
+        <field name="value">/opt/geolite2/GeoLite2-City.mmdb</field>
+    </record>
+
+    <record id="data_ir_config_parameter_maxmind_db_city_asn" model="ir.config_parameter">
+        <field name="key">maxmind.db.asn.path</field>
+        <field name="value">/opt/geolite2/GeoLite2-ASN.mmdb</field>
+    </record>
+
+</odoo>

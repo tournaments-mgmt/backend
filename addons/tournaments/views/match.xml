@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_match_list" model="ir.ui.view">
+        <field name="name">tournaments.match: List view</field>
+        <field name="model">tournaments.match</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="scheduled_state == 'draft'"
+                  decoration-primary="scheduled_state == 'scheduled'"
+                  decoration-success="scheduled_state == 'running'">
+<!--                <field name="tournament_type" invisible="1"/>-->
+                <field name="order_num" widget="handle"
+                       invisible="tournament_type == 'bracket'"/>
+                <field name="name"/>
+                <field name="bracket_phase_name"
+                       invisible="tournament_type != 'bracket'"/>
+                <field name="bracket_num"
+                       invisible="tournament_type != 'bracket'"/>
+                <!--                <field name="winner_match_entrant_id"-->
+                <!--                       invisible="tournament_type != 'bracket'"/>-->
+                <field name="scheduled_state"/>
+                <button type="object"
+                        name="action_start"
+                        icon="fa-play"
+                        title="Start"
+                        confirm="Are you sure to start this Match?"
+                        class="btn-primary"
+                        invisible="scheduled_state not in ['scheduled']"/>
+                <button type="object"
+                        name="action_end"
+                        icon="fa-stop"
+                        title="End"
+                        confirm="Are you sure to end this Match?"
+                        class="btn-primary"
+                        invisible="scheduled_state not in ['running']"/>
+                <!--                <button type="object"-->
+                <!--                        name="action_add_match_result"-->
+                <!--                        icon="fa-gamepad"-->
+                <!--                        title="Add Result"-->
+                <!--                        class="btn-warning"-->
+                <!--                        invisible="scheduled_state not in ['running']"/>-->
+            </list>
+        </field>
+    </record>
+
+    <record id="view_match_form" model="ir.ui.view">
+        <field name="name">tournaments.match: Form view</field>
+        <field name="model">tournaments.match</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="group_invisible" invisible="True"/>
+                <header>
+                    <button type="object"
+                            name="action_confirm"
+                            string="Confirm"
+                            confirm="Are you sure to confirm this Match?"
+                            class="btn-primary"
+                            invisible="scheduled_state not in ['draft']"/>
+                    <button type="object"
+                            name="action_cancel"
+                            string="Cancel"
+                            confirm="Are you sure to cancel this Tournament?"
+                            class="btn-danger"
+                            invisible="scheduled_state not in ['scheduled', 'running']"/>
+                    <button type="object"
+                            name="action_reset"
+                            string="Retire"
+                            confirm="Are you sure to retire this Tournament?"
+                            class="btn-outline-danger"
+                            invisible="scheduled_state not in ['canceled']"/>
+                    <div class="m-4"/>
+                    <button type="object"
+                            name="action_start"
+                            string="Start"
+                            confirm="Are you sure to start this Match?"
+                            class="btn-primary"
+                            invisible="scheduled_state not in ['scheduled']"/>
+                    <!--                    <button type="object"-->
+                    <!--                            name="quick_win"-->
+                    <!--                            string="Quick Win"-->
+                    <!--                            confirm="Are you sure to set winner and close this Match?"-->
+                    <!--                            class="btn-danger"-->
+                    <!--                            invisible="type != 'bracket' or scheduled_state not in ['scheduled']"/>-->
+                    <button type="object"
+                            name="action_end"
+                            string="End"
+                            confirm="Are you sure to end this Match?"
+                            class="btn-primary"
+                            invisible="scheduled_state not in ['running']"/>
+                    <!--                    <button type="object"-->
+                    <!--                            name="manual_set_state"-->
+                    <!--                            icon="fa-exclamation"-->
+                    <!--                            string="Manual State"-->
+                    <!--                            confirm="Are you sure to manual set Match state?"-->
+                    <!--                            class="btn-outline-danger"-->
+                    <!--                            invisible="scheduled_state not in ['done']"/>-->
+                    <div class="m-4"/>
+                    <!--                    <button type="object"-->
+                    <!--                            name="action_add_match_result"-->
+                    <!--                            string="Add Result"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            invisible="scheduled_state not in ['running']"/>-->
+                    <!--                    <button type="object"-->
+                    <!--                            name="bracket_forward_winners"-->
+                    <!--                            string="Forward winner"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            confirm="Are you sure to forward winners to the next step?"-->
+                    <!--                            invisible="scheduled_state != 'canceled'"/> &lt;!&ndash; and winner_match_entrant_id = False &ndash;&gt;-->
+                    <field name="scheduled_state"
+                           widget="statusbar"
+                           statusbar_visible="draft,scheduled,running"/>
+                </header>
+                <sheet>
+                    <div class="row oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" force_save="1"/>
+                        </h1>
+                    </div>
+                    <label for="tournament_id"/>
+                    <h2 class="w-50">
+                        <field name="tournament_id"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="game_id"/>
+                            <field name="platform_id"/>
+                        </group>
+                        <group>
+                            <field name="tournament_type"/>
+                        </group>
+                    </group>
+                    <group name="group_scheduling" string="Scheduling">
+                        <group>
+                            <field name="scheduled_start"/>
+                            <field name="scheduled_end"/>
+                        </group>
+                        <group>
+                            <field name="real_start"/>
+                            <field name="real_end"/>
+                        </group>
+                    </group>
+                    <!--                    <group name="group_results" string="Results"-->
+                    <!--                           invisible="scheduled_state not in ['running', 'done']">-->
+                    <!--                        <field name="winner_match_entrant_id"-->
+                    <!--                               invisible="[-->
+                    <!--                               '|',-->
+                    <!--                               ('tournament_type_id', '!=', % (tournaments.data_tournaments_tournament_type_bracket)d),-->
+                    <!--                               ('state', 'not in', ['done', 'running'])-->
+                    <!--                               ]"/>-->
+                    <!--                        <field name="best_of"/>-->
+                    <!--                        <div name="match_result_placeholder" invisible="True"/>-->
+                    <!--                        &lt;!&ndash;                        <field name="match_result_ids"&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                               context="{'list_view_ref': 'tournaments.view_match_result_list'}"/>&ndash;&gt;-->
+                    <!--                    </group>-->
+                    <!--                    <group name="group_entrants" string="Entrants">-->
+                    <!--                        <field name="match_entrant_ids"-->
+                    <!--                               context="{-->
+                    <!--                               'list_view_ref': 'tournaments.view_match_entrant_list_match',-->
+                    <!--                               'default_match_id': context.get('active_id')-->
+                    <!--                               }"/>-->
+                    <!--                    </group>-->
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_match_search" model="ir.ui.view">
+        <field name="name">tournaments.match: Search view</field>
+        <field name="model">tournaments.match</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="tournament_id"/>
+                <separator/>
+                <field name="platform_id"/>
+                <field name="game_id"/>
+                <separator/>
+                <field name="order_num"/>
+                <separator/>
+                <field name="scheduled_state"/>
+                <separator/>
+                <field name="scheduled_start"/>
+                <field name="scheduled_end"/>
+                <separator/>
+                <!--                <group name="group_entrants" string="Entrants">-->
+                <!--                    <filter name="filter_match_entrant_count_0" string="No entrants"-->
+                <!--                            domain="[('match_entrant_count', '=', 0)]"/>-->
+                <!--                    <filter name="filter_match_entrant_count_1" string="One entrant"-->
+                <!--                            domain="[('match_entrant_count', '=', 1)]"/>-->
+                <!--                    <filter name="filter_match_entrant_count_ge2" string="Two or more"-->
+                <!--                            domain="[('match_entrant_count', '>=', 2)]"/>-->
+                <!--                </group>-->
+                <group>
+                    <filter name="groupby_tournament" string="Tournament" context="{'group_by': 'tournament_id'}"/>
+                    <filter name="groupby_platform" string="Platform" context="{'group_by': 'platform_id'}"/>
+                    <filter name="groupby_game" string="Game" context="{'group_by': 'game_id'}"/>
+                    <separator/>
+                    <filter name="groupby_bracket_phase" string="Bracket phase"
+                            context="{'group_by': 'bracket_phase'}"/>
+                    <!--                    <filter name="groupby_match_entrant_count" string="Entrant count"-->
+                    <!--                            context="{'group_by': 'match_entrant_count'}"/>-->
+                    <separator/>
+                    <filter name="groupby_scheduled_state" string="Tournament"
+                            context="{'group_by': 'scheduled_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

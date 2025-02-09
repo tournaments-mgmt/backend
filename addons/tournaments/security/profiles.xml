@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record model="res.groups" id="group_profile_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="category_tournaments"/>
+    </record>
+
+    <record model="res.groups" id="group_profile_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="category_tournaments"/>
+        <field name="implied_ids" eval="[(6, 0, [ref('group_profile_user')])]"/>
+    </record>
+
+</odoo>

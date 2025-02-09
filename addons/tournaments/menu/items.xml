@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <menuitem id="menu_root"
+              name="Tournaments"
+              web_icon="tournaments,static/description/icon.png"
+              groups="group_profile_user"
+              sequence="0"/>
+
+    <!--    <menuitem id="menu_entrants"-->
+    <!--              name="Entrants"-->
+    <!--              parent="menu_root"-->
+    <!--              sequence="1"/>-->
+
+    <!--    <menuitem id="menu_entrants_list"-->
+    <!--              name="List"-->
+    <!--              parent="menu_entrants"-->
+    <!--              action="action_entrant_list"-->
+    <!--              sequence="0"/>-->
+
+    <!--    <menuitem id="menu_entrants_search_qr"-->
+    <!--              name="Search with QR-Code"-->
+    <!--              parent="menu_entrants"-->
+    <!--              action="action_entrant_search_qr"-->
+    <!--              sequence="1"/>-->
+
+    <menuitem id="menu_tournaments"
+              name="Tournaments"
+              parent="menu_root"
+              sequence="1"/>
+
+    <menuitem id="menu_tournaments_list"
+              name="List"
+              parent="menu_tournaments"
+              action="action_tournament_list"
+              sequence="0"/>
+
+    <!--    <menuitem id="menu_registrations"-->
+    <!--              name="Registrations"-->
+    <!--              parent="menu_root"-->
+    <!--              sequence="90"/>-->
+
+    <!--    <menuitem id="menu_registrations_list"-->
+    <!--              name="List"-->
+    <!--              parent="menu_registrations"-->
+    <!--              action="action_registration_list"-->
+    <!--              sequence="0"/>-->
+
+    <menuitem id="menu_registry"
+              name="Registry"
+              parent="menu_root"
+              sequence="100"/>
+
+    <menuitem id="menu_registry_platforms"
+              name="Platforms"
+              parent="menu_registry"
+              action="action_platform_list"
+              sequence="0"/>
+
+    <menuitem id="menu_registry_games"
+              name="Games"
+              parent="menu_registry"
+              action="action_game_list"
+              sequence="1"/>
+
+    <menuitem id="menu_registry_pegi"
+              name="PEGI"
+              parent="menu_registry"
+              sequence="3"/>
+
+    <menuitem id="menu_registry_pegi_age"
+              name="Age Labels"
+              parent="menu_registry_pegi"
+              action="pegi.action_age_list"
+              sequence="0"/>
+
+    <menuitem id="menu_registry_pegi_content"
+              name="Content Descriptors"
+              parent="menu_registry_pegi"
+              action="pegi.action_content_list"
+              sequence="1"/>
+
+</odoo>

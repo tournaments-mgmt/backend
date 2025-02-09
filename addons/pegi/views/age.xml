@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_age_list" model="ir.ui.view">
+        <field name="name">pegi.age: List view</field>
+        <field name="model">pegi.age</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="logo" widget="image" options="{'size': [90, 100]}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_age_form" model="ir.ui.view">
+        <field name="name">pegi.age: Form view</field>
+        <field name="model">pegi.age</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="float-right">
+                        <field name="logo"
+                               widget="image"
+                               options="{'size': [181, 200]}"
+                               readonly="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_age_search" model="ir.ui.view">
+        <field name="name">pegi.age: Search view</field>
+        <field name="model">pegi.age</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_age_kanban" model="ir.ui.view">
+        <field name="name">pegi.age: Kanban view</field>
+        <field name="model">pegi.age</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="logo"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <field name="logo"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div>
+                                    <field name="description"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="data_pegi_age_3" model="pegi.age">
+        <field name="name">PEGI 3</field>
+        <field name="logo" type="base64" file="pegi/static/img/age/PEGI_3.png"/>
+        <field name="description">The content of games with a PEGI 3 rating is considered suitable for all age groups.
+            The game should not contain any sounds or pictures that are likely to frighten young children. A very mild
+            form of violence (in a comical context or a childlike setting) is acceptable. No bad language should be
+            heard.
+        </field>
+    </record>
+
+    <record id="data_pegi_age_7" model="pegi.age">
+        <field name="name">PEGI 7</field>
+        <field name="logo" type="base64" file="pegi/static/img/age/PEGI_7.png"/>
+        <field name="description">Game content with scenes or sounds that can possibly be frightening to younger
+            children should fall in this category. Very mild forms of violence (implied, non-detailed, or non-realistic
+            violence) are acceptable for a game with a PEGI 7 rating.
+        </field>
+    </record>
+
+    <record id="data_pegi_age_12" model="pegi.age">
+        <field name="name">PEGI 12</field>
+        <field name="logo" type="base64" file="pegi/static/img/age/PEGI_12.png"/>
+        <field name="description">Video games that show violence of a slightly more graphic nature towards fantasy
+            characters or non-realistic violence towards human-like characters would fall in this age category. Sexual
+            innuendo or sexual posturing can be present, while any bad language in this category must be mild.
+        </field>
+    </record>
+
+    <record id="data_pegi_age_16" model="pegi.age">
+        <field name="name">PEGI 16</field>
+        <field name="logo" type="base64" file="pegi/static/img/age/PEGI_16.png"/>
+        <field name="description">This rating is applied once the depiction of violence (or sexual activity) reaches a
+            stage that looks the same as would be expected in real life. The use of bad language in games with a PEGI 16
+            rating can be more extreme, while the use of tobacco, alcohol or illegal drugs can also be present.
+        </field>
+    </record>
+
+    <record id="data_pegi_age_18" model="pegi.age">
+        <field name="name">PEGI 18</field>
+        <field name="logo" type="base64" file="pegi/static/img/age/PEGI_18.png"/>
+        <field name="description">The adult classification is applied when the level of violence reaches a stage where
+            it becomes a depiction of gross violence, apparently motiveless killing, or violence towards defenceless
+            characters. The glamorisation of the use of illegal drugs and of the simulation of gambling, and explicit
+            sexual activity should also fall into this age category.
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="action_age_list" model="ir.actions.act_window">
+        <field name="name">PEGI Age Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pegi.age</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+</odoo>

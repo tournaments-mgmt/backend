@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="action_match_list" model="ir.actions.act_window">
+        <field name="name">Matches</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tournaments.match</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no matches in database.
+                <br/>
+                Click "Create" to add new one.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_match_quick_win">
+        <field name="name">Quick Win</field>
+        <field name="model_id" ref="tournaments.model_tournaments_match"/>
+        <field name="binding_model_id" ref="tournaments.model_tournaments_match"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.quick_win()
+        </field>
+    </record>
+
+</odoo>

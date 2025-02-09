@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="action_tournament_list" model="ir.actions.act_window">
+        <field name="name">Tournaments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tournaments.tournament</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There are no tournaments in database.
+                <br/>
+                Click "Create" to add new one.
+            </p>
+        </field>
+    </record>
+
+</odoo>

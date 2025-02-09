@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="data_pegi_content_violence" model="pegi.content">
+        <field name="name">VIOLENCE</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/VIOLENCE.png"/>
+        <field name="description">The game contains depictions of violence. In games rated PEGI 7 this can only be
+            non-realistic or non-detailed violence. Games rated PEGI 12 can include violence in a fantasy environment or
+            non-realistic violence towards human-like characters, whereas games rated PEGI 16 or 18 have increasingly
+            more realistic-looking violence.
+        </field>
+    </record>
+
+    <record id="data_pegi_content_bad_language" model="pegi.content">
+        <field name="name">BAD LANGUAGE</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/BAD_LANGUAGE.png"/>
+        <field name="description">The game contains bad language. This descriptor can be found on games with a PEGI 12
+            (mild swearing), PEGI 16 (e.g. sexual expletives or blasphemy) or PEGI 18 rating (e.g. sexual expletives or
+            blasphemy).
+        </field>
+    </record>
+
+    <record id="data_pegi_content_fear" model="pegi.content">
+        <field name="name">FEAR</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/FEAR.png"/>
+        <field name="description">This descriptor may appear as 'Fear' on games with a PEGI 7 if it contains pictures or
+            sounds that may be frightening or scary to young children, or as 'Horror' on higher-rated games that contain
+            moderate (PEGI 12) or intense and sustained (PEGI 16) horror sequences or disturbing images (not necessarily
+            including violent content).
+        </field>
+    </record>
+
+    <record id="data_pegi_content_gambling" model="pegi.content">
+        <field name="name">GAMBLING</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/GAMBLING.png"/>
+        <field name="description">The game contains elements that encourage or teach gambling. These simulations of
+            gambling refer to games of chance that are normally carried out in casinos or gambling halls. Some older
+            titles can be found with PEGI 12 or PEGI 16, but PEGI changed the criteria for this classification in 2020,
+            which made that new games with this sort of content are always PEGI 18.
+        </field>
+    </record>
+
+    <record id="data_pegi_content_sex" model="pegi.content">
+        <field name="name">SEX</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/SEX.png"/>
+        <field name="description">This content descriptor can accompany a PEGI 12 rating if the game includes sexual
+            posturing or innuendo, a PEGI 16 rating if there is erotic nudity or sexual intercourse without visible
+            genitals or a PEGI 18 rating if there is explicit sexual activity in the game. Depictions of nudity in a
+            non-sexual context do not require a specific age rating, and this descriptor would not be necessary.
+        </field>
+    </record>
+
+    <record id="data_pegi_content_drugs" model="pegi.content">
+        <field name="name">DRUGS</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/DRUGS.png"/>
+        <field name="description">The game refers to or depicts the use of illegal drugs, alcohol or tobacco. Games with
+            this content descriptor are always PEGI 16 or PEGI 18.
+        </field>
+    </record>
+
+    <record id="data_pegi_content_discrimination" model="pegi.content">
+        <field name="name">DISCRIMINATION</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/DISCRIMINATION.png"/>
+        <field name="description">The game contains depictions of ethnic, religious, nationalistic or other stereotypes
+            likely to encourage hatred. This content is always restricted to a PEGI 18 rating (and likely to infringe
+            national criminal laws).
+        </field>
+    </record>
+
+    <record id="data_pegi_content_in_game_purchases" model="pegi.content">
+        <field name="name">IN-GAME PURCHASES</field>
+        <field name="logo" type="base64" file="pegi/static/img/content/IN_GAME_PURCHASES.png"/>
+        <field name="description"><![CDATA[The game offers players the option to purchase digital goods or services with
+            real-world currency. Such purchases include additional content (bonus levels, outfits, surprise items,
+            music), but also upgrades (e.g. to disable ads), subscriptions to updates, virtual coins and other forms of
+            in-game currency.
+            <br/>
+            This content descriptor is sometimes accompanied by an additional notice if the in-game purchases include
+            random items (like loot boxes or card packs). Paid random items comprise all in-game offers where players
+            don't know exactly what they are getting prior to the purchase. They can be purchased directly with real
+            money and/or exchanged for an in-game virtual currency. Depending on the game, these items may be purely
+            cosmetic or they may have functional value.
+            <br/>
+            The notice is always displayed underneath or near the age label and content descriptors.]]>
+        </field>
+    </record>
+
+</odoo>
