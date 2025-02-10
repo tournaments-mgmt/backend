@@ -62,11 +62,9 @@ class WebTokenService:
         cipher = self._generate_cypher(iv)
         decryptor = cipher.decryptor()
 
-        decrypted_jwt: bytes = decryptor.update(ciphertext) + decryptor.finalize_with_tag(tag)
-
-        decoded_jwt = decrypted_jwt.decode()
-
         try:
+            decrypted_jwt: bytes = decryptor.update(ciphertext) + decryptor.finalize_with_tag(tag)
+            decoded_jwt = decrypted_jwt.decode()
             return jwt.decode(decoded_jwt, self._sign_key, algorithms=[JWT_ALGORITHM])
         except Exception as e:
             _logger.error(f"Error verifying token signature: {e}\n{traceback.format_exc()}")

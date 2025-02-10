@@ -18,3 +18,7 @@ class InvalidTokenError(ServiceError):
 
 class AuthenticationError(ServiceError):
     pass
+
+
+class AuthorizationError(ServiceError):
+    pass

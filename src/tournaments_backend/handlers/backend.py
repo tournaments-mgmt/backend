@@ -1,7 +1,7 @@
 from starlette import status
 from starlette.responses import JSONResponse
 
-from tournaments_backend.errors.backend import BackendError, AuthenticationError
+from tournaments_backend.errors.backend import BackendError, AuthenticationError, AuthorizationError, InvalidTokenError
 
 
 def register(app):
@@ -16,5 +16,13 @@ def register(app):
     async def handler(request, exc):
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
+            content={},
+        )
+
+    @app.exception_handler(InvalidTokenError)
+    @app.exception_handler(AuthorizationError)
+    async def handler(request, exc):
+        return JSONResponse(
+            status_code=status.HTTP_403_FORBIDDEN,
             content={},
         )
