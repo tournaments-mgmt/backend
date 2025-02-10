@@ -67,6 +67,7 @@ zeep = "==4.2.1"
 
 fastapi = "==0.115.8"
 pydantic = "==2.11.0a1"
+pyjwt = "==2.10.1"
 pyyaml = "==6.0.2"
 uvicorn = "==0.34.0"
 uvloop = "==0.21.0"
@@ -74,3 +75,6 @@ uvloop = "==0.21.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "==8.3.4"
 pytest-asyncio = "==0.25.3"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

@@ -9,7 +9,7 @@ from starlette import status
 from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 
-from tournaments_backend import api, middlewares, handlers, conf
+from tournaments_backend import api, middlewares, handlers, conf, persistence
 from tournaments_backend.conf.services import generate_services
 
 _logger = logging.getLogger(__name__)
@@ -104,10 +104,10 @@ def _register_probes_controller(instance: FastAPI) -> None:
 
 
 def create_instance() -> FastAPI:
-    from tournaments_backend.config import config
     from tournaments_backend.version import APP_VERSION
 
     conf.logger.init()
+    persistence.odoo_environment.configure()
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -117,7 +117,7 @@ def create_instance() -> FastAPI:
             yield
 
     instance: FastAPI = FastAPI(
-        title="FileScanner API",
+        title="Tournaments Management API",
         version=APP_VERSION,
         docs_url=None,
         redoc_url=None,

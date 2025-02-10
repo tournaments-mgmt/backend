@@ -134,6 +134,20 @@ class Config(ConfigSkeleton):
     LOG_FORMAT: str = "%(asctime)s,%(msecs)d [%(levelname)07s] [%(process)s|%(thread)s] {%(processName)s} %(funcName)s {%(pathname)s:%(lineno)d}: %(message)s"
     LOG_ACCESS_FORMAT: str = "%(asctime)s - %(client_addr)s - \"%(request_line)s\" %(status_code)s"
 
+    DB_HOST: str = "postgres"
+    DB_PORT: int = 5432
+    DB_USERNAME: str = "tournaments"
+    DB_PASSWORD: str = ""
+    DB_NAME: str = "tournaments"
+
+    ADDONS_PATH: list[str] = ["odoo/odoo/addons", "odoo/addons", "addons"]
+    ADDONS_LIST: list[str] = ["tournaments", "showcases"]
+
+    DATADIR: str = "/data"
+
+    JWT_SIGN_KEY: str = ""
+    JWT_ENCRYPT_KEY: str = ""
+
     _parsing_var: dict = {
         "LOG_LEVEL": lambda v: logging.getLevelName(v)
     }

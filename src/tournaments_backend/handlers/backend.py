@@ -1,13 +1,20 @@
 from starlette import status
 from starlette.responses import JSONResponse
 
-from tournaments_backend.errors.backend import BackendException
+from tournaments_backend.errors.backend import BackendError, AuthenticationError
 
 
 def register(app):
-    @app.exception_handler(BackendException)
+    @app.exception_handler(BackendError)
     async def handler(request, exc):
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"message": str(exc)},
+        )
+
+    @app.exception_handler(AuthenticationError)
+    async def handler(request, exc):
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={},
         )

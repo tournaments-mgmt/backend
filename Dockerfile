@@ -28,6 +28,11 @@ FROM base AS odoo
 COPY --from=venv /venv /venv
 
 FROM odoo AS dev
+COPY pyproject.toml /project/pyproject.toml
+COPY poetry.lock /project/poetry.lock
+RUN cd /project \
+    && . /venv/bin/activate \
+    && poetry install --no-root --with=dev
 USER user
 
 FROM odoo AS prod
