@@ -3,6 +3,14 @@ ENV DEBIAN_FRONTENT=noninteractive
 ENV HOME=/data
 RUN apt update \
     && apt -y dist-upgrade \
+    && apt -y install curl ca-certificates lsb-release \
+    && install -d /usr/share/postgresql-common/pgdg \
+    && curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+    && echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && apt update \
+    && apt -y install \
+      postgresql-client \
+      libpq5 \
     && rm -R /var/lib/apt/*
 RUN groupadd -g 1000 user \
     && useradd --home-dir=/data --gid=1000 --no-create-home --shell=/bin/bash --uid=1000 user \
@@ -13,6 +21,7 @@ FROM base AS venv
 RUN apt update \
     && apt -y dist-upgrade \
     && apt -y install build-essential automake autoconf libtool pkg-config cmake \
+      libpq-dev \
     && rm -R /var/lib/apt/*
 RUN python3 -m venv /venv \
     && . /venv/bin/activate \

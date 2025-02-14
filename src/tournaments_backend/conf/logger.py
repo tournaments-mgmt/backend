@@ -33,3 +33,8 @@ def init():
     logger.propagate = False
     logger.setLevel(config.LOG_LEVEL)
     logger.addHandler(app_handler)
+
+    logger = logging.getLogger("conftest")
+    logger.propagate = False
+    logger.setLevel(config.LOG_LEVEL)
+    logger.addHandler(app_handler)

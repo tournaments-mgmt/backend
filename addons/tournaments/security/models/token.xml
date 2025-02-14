@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="access_tournaments_token_full" model="ir.model.access">
+        <field name="name">tournaments.token: Full access</field>
+        <field name="model_id" ref="model_tournaments_token"/>
+        <field name="group_id" ref="group_profile_manager"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

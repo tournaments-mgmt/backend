@@ -1,0 +1,13 @@
+---
+addons:
+  path:
+    - ../odoo/odoo/addons
+    - ../odoo/addons
+    - ../addons
+db:
+  host: "172.17.0.1"
+  username: "tournaments_test"
+  password: "tournaments_test"
+  name: "tournaments_test"
+log:
+  level: DEBUG

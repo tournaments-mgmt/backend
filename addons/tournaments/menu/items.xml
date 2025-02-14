@@ -81,4 +81,16 @@
               action="pegi.action_content_list"
               sequence="1"/>
 
+    <menuitem id="menu_service"
+              name="Service"
+              parent="menu_root"
+              groups="tournaments.group_profile_manager"
+              sequence="200"/>
+
+    <menuitem id="menu_service_tokens"
+              name="Tokens"
+              parent="menu_service"
+              action="action_token_list"
+              sequence="0"/>
+
 </odoo>

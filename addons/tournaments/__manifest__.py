@@ -21,16 +21,19 @@
         "security/models/game.xml",
         "security/models/match.xml",
         "security/models/platform.xml",
+        "security/models/token.xml",
         "security/models/tournament.xml",
 
         "views/game.xml",
         "views/match.xml",
         "views/platform.xml",
+        "views/token.xml",
         "views/tournament.xml",
 
         "actions/game.xml",
         "actions/match.xml",
         "actions/platform.xml",
+        "actions/token.xml",
         "actions/tournament.xml",
 
         "menu/items.xml"

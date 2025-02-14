@@ -5,7 +5,7 @@ from starlette.status import HTTP_200_OK
 from odoo.api import Environment
 from tournaments_backend.persistence.odoo_environment import odoo_env_superuser
 from tournaments_backend.services.authentication import AuthenticationService
-from tournaments_backend.services.webtoken import WebTokenService
+from tournaments_backend.services.token import TokenService
 
 router: APIRouter = APIRouter()
 
@@ -30,14 +30,7 @@ async def login(
         odoo_env: Environment = Depends(odoo_env_superuser)
 ) -> ResponseBody:
     authentication_service: AuthenticationService = request.app.state.authentication_service
-    webtoken_service: WebTokenService = request.app.state.webtoken_service
-
+    token_service: TokenService = request.app.state.token_service
     user_id: int = await authentication_service.authenticate(request_body.login, request_body.password, odoo_env)
-
-    data: dict = {
-        "user_id": user_id
-    }
-
-    token: str = await webtoken_service.encrypt(data)
-
+    token: str = await token_service.generate_token(user_id=user_id, odoo_env=odoo_env)
     return ResponseBody(token=token)

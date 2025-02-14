@@ -38,7 +38,7 @@ class Platform(models.Model):
         string="Games",
         help="Supported games",
         comodel_name="tournaments.game",
-        relation="tournament_game_supported_platform_rel",
+        relation="tournaments_game_supported_platform_rel",
         column1="platform_id",
         column2="game_id",
         readonly=True

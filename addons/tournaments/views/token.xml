@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_token_list" model="ir.ui.view">
+        <field name="name">tournaments.token: List view</field>
+        <field name="model">tournaments.token</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="res_users_id"/>
+                <field name="value"/>
+                <field name="ts_expiration"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_token_form" model="ir.ui.view">
+        <field name="name">tournaments.token: Form view</field>
+        <field name="model">tournaments.token</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="row oe_title">
+                        <label for="value"/>
+                        <h1>
+                            <field name="value"/>
+                        </h1>
+                    </div>
+                    <label for="res_users_id"/>
+                    <h2 class="w-50">
+                        <field name="res_users_id"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="ts_expiration"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_token_search" model="ir.ui.view">
+        <field name="name">tournaments.token: Search view</field>
+        <field name="model">tournaments.token</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="value"/>
+                <field name="res_users_id"/>
+                <field name="ts_expiration"/>
+                <group>
+                    <filter name="groupby_res_users_id" string="User" context="{'group_by': 'res_users_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

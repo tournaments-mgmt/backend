@@ -15,7 +15,7 @@ def register(app):
     @app.exception_handler(AuthenticationError)
     async def handler(request, exc):
         return JSONResponse(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             content={},
         )
 

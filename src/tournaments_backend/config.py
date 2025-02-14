@@ -55,7 +55,7 @@ class ConfigSkeleton:
         return value
 
     def _parse_config_file(self) -> dict:
-        conf_file_path: str = os.environ.get("CONFIG_FILE", "config.yaml")
+        conf_file_path: str = os.environ.get("CONFIG_FILE", "config.yml")
 
         if os.path.exists(conf_file_path):
             with open(conf_file_path, "r") as fd:
