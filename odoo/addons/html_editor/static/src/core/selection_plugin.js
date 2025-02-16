@@ -275,7 +275,15 @@ export class SelectionPlugin extends Plugin {
             if (anchorNode === focusNode && focusOffset < anchorOffset) {
                 direction = !direction;
             }
-
+            if (
+                this.activeSelection &&
+                (isProtecting(anchorNode) ||
+                    (isProtected(anchorNode) && !isUnprotecting(anchorNode)))
+            ) {
+                // Keep the previous activeSelection in case of user interactions
+                // inside a protected zone.
+                return this.activeSelection;
+            }
             [anchorNode, anchorOffset] = normalizeCursorPosition(
                 anchorNode,
                 anchorOffset,
@@ -431,14 +439,14 @@ export class SelectionPlugin extends Plugin {
         Object.defineProperty(selectionData, "documentSelectionIsProtecting", {
             get: function () {
                 return documentSelection?.anchorNode
-                    ? isProtected(documentSelection.anchorNode)
+                    ? isProtecting(documentSelection.anchorNode)
                     : false;
             }.bind(this),
         });
         Object.defineProperty(selectionData, "documentSelectionIsProtected", {
             get: function () {
                 return documentSelection?.anchorNode
-                    ? isProtecting(documentSelection.anchorNode)
+                    ? isProtected(documentSelection.anchorNode)
                     : false;
             }.bind(this),
         });
@@ -851,6 +859,8 @@ export class SelectionPlugin extends Plugin {
         if (documentSelectionIsInEditable) {
             return;
         }
+        // Manualy focusing the editable is necessary to avoid some non-deterministic error in the HOOT unit tests.
+        this.editable.focus();
         const { anchorNode, anchorOffset, focusNode, focusOffset } = editableSelection;
         const selection = this.document.getSelection();
         if (selection) {
