@@ -1,0 +1,15 @@
+---
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/deploy
+      - image: postgres:17.3
+        environment:
+          POSTGRES_USER: tournaments_test
+          POSTGRES_PASSWORD: tournaments_test
+    steps:
+      - checkout
+      - run:
+          name: Build image
+          command: docker image build --target=prod --tag=tournaments-mgmt-backend:${CIRCLE_SHA1} .
