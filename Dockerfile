@@ -23,30 +23,25 @@ RUN apt update \
     && apt -y install build-essential automake autoconf libtool pkg-config cmake \
       libpq-dev \
     && rm -R /var/lib/apt/*
-RUN python3 -m venv /venv \
-    && . /venv/bin/activate \
-    && python3 -m pip install --upgrade pip setuptools wheel poetry
 RUN mkdir /project
 COPY pyproject.toml /project/pyproject.toml
 COPY poetry.lock /project/poetry.lock
-RUN cd /project \
+RUN python3 -m venv /venv \
     && . /venv/bin/activate \
-    && poetry install --no-root
+    && python3 -m pip install --upgrade pip setuptools wheel poetry \
+    && poetry install --project=/project --no-root --with=dev
 
-FROM base AS odoo
+FROM base AS ready
 COPY --from=venv /venv /venv
 
-FROM odoo AS dev
-COPY pyproject.toml /project/pyproject.toml
-COPY poetry.lock /project/poetry.lock
-RUN cd /project \
-    && . /venv/bin/activate \
-    && poetry install --no-root --with=dev
+FROM ready AS dev
 USER user
 
-FROM odoo AS prod
+FROM ready AS prod
 COPY odoo /odoo
 COPY addons /addons
+COPY src /app
+COPY test /test
 COPY docker/entrypoint.sh /entrypoint.sh
 VOLUME /data
 RUN chown -R 1000:1000 /data

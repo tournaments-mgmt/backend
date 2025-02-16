@@ -25,11 +25,11 @@ if [ -z "${DB_PORT}" ]; then
 fi
 
 if [ -z "${DB_USERNAME}" ]; then
-  DB_USERNAME="odoo"
+  DB_USERNAME="tournaments"
 fi
 
 if [ -z "${DB_PASSWORD}" ]; then
-  DB_PASSWORD="odoo"
+  DB_PASSWORD="tournaments"
 fi
 
 if [ -z "${DB_NAME}" ]; then
@@ -85,7 +85,9 @@ function run_odoo() {
 
   set -x
 
-  /venv/bin/python3 \
+  source /venv/bin/activate
+
+  python3 \
     /odoo/odoo-bin \
     --config="${CONFIG}" \
     --addons-path="${ADDONS_PATH}" \
@@ -109,8 +111,9 @@ function run_api() {
   export PYTHONPATH="/app:/odoo"
 
   if [ "${1}" = "test" ]; then
-    cd /app_tests || exit 1
-    /venv/bin/pytest
+    cd /test || exit 1
+    source /venv/bin/activate
+    python3 -B -m pytest -v -p no:cacheprovider
     return
   fi
 
@@ -118,12 +121,14 @@ function run_api() {
 
   touch "${CONFIG}"
 
-  /venv/bin/python3 main.py
+  source /venv/bin/activate
+  python3 main.py
 }
 
 function run_update_probe() {
   cd /update_probe || exit 1
-  /venv/bin/python3 main.py
+  source /venv/bin/activate
+  python3 main.py
 }
 
 export -f run_odoo
