@@ -4,8 +4,7 @@ jobs:
   build:
     docker:
       - image: cimg/deploy:2025.01.1
-      - image: postgres:17.3
-        name: postgres
+      - image: cimg/postgres:17.3
         environment:
           POSTGRES_USER: tournaments_test
           POSTGRES_PASSWORD: tournaments_test
@@ -23,7 +22,7 @@ jobs:
               container run \
               --rm \
               --tty \
-              --env DB_HOST=postgres \
+              --env DB_HOST=localhost \
               --env DB_PORT=5432 \
               --env DB_USERNAME=tournaments_test \
               --env DB_PASSWORD=tournaments_test \
@@ -37,7 +36,7 @@ jobs:
               container run \
               --rm \
               --tty \
-              --env DB_HOST=postgres \
+              --env DB_HOST=localhost \
               --env DB_PORT=5432 \
               --env DB_USERNAME=tournaments_test \
               --env DB_PASSWORD=tournaments_test \
