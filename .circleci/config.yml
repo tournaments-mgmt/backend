@@ -5,11 +5,42 @@ jobs:
     docker:
       - image: cimg/deploy:2025.01.1
       - image: postgres:17.3
+        name: postgres
         environment:
           POSTGRES_USER: tournaments_test
           POSTGRES_PASSWORD: tournaments_test
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Build image
           command: docker image build --target=prod --tag=tournaments-mgmt-backend:${CIRCLE_SHA1} .
+      - run:
+          name: Run Odoo tests
+          command: |
+            docker \
+              container run \
+              --rm \
+              --tty \
+              --env DB_HOST=postgres \
+              --env DB_PORT=5432 \
+              --env DB_USERNAME=postgres \
+              --env DB_PASSWORD=postgres \
+              --env DB_NAME=postgres \
+              --env MODE=odoo-test \
+              tournaments-mgmt-backend:${CIRCLE_SHA1}
+      - run:
+          name: Run API tests
+          command: |
+            docker \
+              container run \
+              --rm \
+              --tty \
+              --env DB_HOST=postgres \
+              --env DB_PORT=5432 \
+              --env DB_USERNAME=postgres \
+              --env DB_PASSWORD=postgres \
+              --env DB_NAME=postgres \
+              --env MODE=api-test \
+              tournaments-mgmt-backend:${CIRCLE_SHA1}
