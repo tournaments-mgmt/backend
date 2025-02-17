@@ -4,8 +4,15 @@ jobs:
   build:
     docker:
       - image: cimg/deploy:2025.01.1
+        environment:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: tournaments_test
+          DB_PASSWORD: tournaments_test
+          DB_NAME: tournaments_test
       - image: cimg/postgres:17.3
         environment:
+          PGHOST: localhost
           POSTGRES_USER: tournaments_test
           POSTGRES_PASSWORD: tournaments_test
     steps:
@@ -18,28 +25,18 @@ jobs:
       - run:
           name: Run Odoo tests
           command: |
-            docker \
-              container run \
-              --rm \
-              --tty \
-              --env DB_HOST=localhost \
-              --env DB_PORT=5432 \
-              --env DB_USERNAME=tournaments_test \
-              --env DB_PASSWORD=tournaments_test \
-              --env DB_NAME=tournaments_test \
+            docker container run \
+              --rm --tty \
               --env MODE=odoo-test \
               tournaments-mgmt-backend:${CIRCLE_SHA1}
       - run:
           name: Run API tests
           command: |
-            docker \
-              container run \
-              --rm \
-              --tty \
-              --env DB_HOST=localhost \
-              --env DB_PORT=5432 \
-              --env DB_USERNAME=tournaments_test \
-              --env DB_PASSWORD=tournaments_test \
-              --env DB_NAME=tournaments_test \
+            docker container run \
+              --rm --tty \
               --env MODE=api-test \
               tournaments-mgmt-backend:${CIRCLE_SHA1}
+workflows:
+  main:
+    jobs:
+      - build
