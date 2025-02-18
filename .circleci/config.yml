@@ -16,8 +16,14 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Docker login
+          command: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - run:
           name: Build image
-          command: docker image build --target=prod --tag=tournaments-mgmt-backend:${CIRCLE_SHA1} .
+          command: docker image build --target=prod --tag=sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1} .
+      - run:
+          name: Publish image
+          command: docker image push sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1}
   test:
     executor: linux-x86_64
     steps:
