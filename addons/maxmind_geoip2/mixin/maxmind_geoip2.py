@@ -24,6 +24,9 @@ class MaxMindGeoIP2Mixin(models.AbstractModel):
         return self._lookup(address, db="asn")
 
     def _lookup(self, address: str, db: str = "city"):
+        if not address:
+            raise ValidationError("Address cannot be empty")
+
         mmdb_path: str = self._get_db_path(db=db)
         with geoip2.database.Reader(mmdb_path) as reader:
             return getattr(reader, db)(address)
