@@ -4,11 +4,6 @@ jobs:
   build:
     docker:
       - image: cimg/deploy:2025.01.1
-      - image: cimg/postgres:17.3
-        environment:
-          PGHOST: localhost
-          POSTGRES_USER: tournaments_test
-          POSTGRES_PASSWORD: tournaments_test
     steps:
       - checkout
       - setup_remote_docker:
@@ -17,10 +12,26 @@ jobs:
           name: Build image
           command: docker image build --target=prod --tag=tournaments-mgmt-backend:${CIRCLE_SHA1} .
       - run:
+          name: Create Docker network
+          command: docker network create testnet
+      - run:
+          name: Run PostgreSQL test server
+          command: |
+            docker container run \
+              --detach \
+              --network testnet \
+              --name postgres \
+              --env POSTGRES_USER=tournaments_test \
+              --env POSTGRES_PASSWORD=tournaments_test \
+              --env POSTGRES_DB=tournaments_test \
+              --tmpfs /var/lib/postgresql/data \
+              cimg/postgres:17.3
+      - run:
           name: Run Odoo tests
           command: |
             docker container run \
               --rm --tty \
+              --network testnet \
               --env DB_HOST=postgres \
               --env DB_PORT=5432 \
               --env DB_USERNAME=tournaments_test \
@@ -33,6 +44,7 @@ jobs:
           command: |
             docker container run \
               --rm --tty \
+              --network testnet \
               --env DB_HOST=postgres \
               --env DB_PORT=5432 \
               --env DB_USERNAME=tournaments_test \
@@ -40,6 +52,11 @@ jobs:
               --env DB_NAME=tournaments_test \
               --env MODE=api-test \
               tournaments-mgmt-backend:${CIRCLE_SHA1}
+      - run:
+          name: Close PostgreSQL test server
+          command: |
+            docker container stop postgres
+            docker container rm postgres
 workflows:
   main:
     jobs:
