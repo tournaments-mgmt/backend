@@ -41,6 +41,7 @@ jobs:
               --detach \
               --network=testnet \
               --name=postgres \
+              --env POSTGRES_PASSWORD=postgres \
               --tmpfs /var/lib/postgresql/data \
               --volume /tmp/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d \
               postgres:17.3
