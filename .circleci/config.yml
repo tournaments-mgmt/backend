@@ -18,7 +18,7 @@ jobs:
           name: Run PostgreSQL test server
           command: |
             mkdir -p /docker-entrypoint-initdb.d
-            echo <<EOF > /docker-entrypoint-initdb.d/init.sql
+            echo \<<EOF > /docker-entrypoint-initdb.d/init.sql
             CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';
             EOF
             docker container run \
