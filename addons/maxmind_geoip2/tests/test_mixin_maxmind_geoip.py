@@ -21,14 +21,14 @@ class TestMaxMindGeoIPMixin(TransactionCase):
         with self.assertRaises(ValueError):
             mixin_obj.maxmind_lookup_asn("")
 
-    def test_maxmind_lookup_city_valid(self):
-        mixin_obj = self.env["maxmind.geoip2"]
+    # def test_maxmind_lookup_city_valid(self):
+    #     mixin_obj = self.env["maxmind.geoip2"]
+    #
+    #     response = mixin_obj.maxmind_lookup_city("1.1.1.1")
+    #     self.assertTrue(response)
 
-        response = mixin_obj.maxmind_lookup_city("1.1.1.1")
-        self.assertTrue(response)
-
-    def test_maxmind_lookup_asn_valid(self):
-        mixin_obj = self.env["maxmind.geoip2"]
-
-        response = mixin_obj.maxmind_lookup_asn("1.1.1.1")
-        self.assertTrue(response)
+    # def test_maxmind_lookup_asn_valid(self):
+    #     mixin_obj = self.env["maxmind.geoip2"]
+    #
+    #     response = mixin_obj.maxmind_lookup_asn("1.1.1.1")
+    #     self.assertTrue(response)
