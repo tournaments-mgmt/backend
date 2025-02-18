@@ -81,7 +81,11 @@ jobs:
 workflows:
   test_and_build:
     jobs:
-      - build
+      - build:
+          context:
+            - "Docker Hub"
       - test:
+          context:
+            - "Docker Hub"
           requires:
             - build
