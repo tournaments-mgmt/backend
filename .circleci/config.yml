@@ -30,7 +30,7 @@ jobs:
           name: Run PostgreSQL test server
           command: |
             mkdir -p /tmp/docker-entrypoint-initdb.d
-            cat "CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';" > /tmp/docker-entrypoint-initdb.d/init.sql
+            echo "CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';" > /tmp/docker-entrypoint-initdb.d/init.sql
             docker container run \
               --detach \
               --network testnet \
