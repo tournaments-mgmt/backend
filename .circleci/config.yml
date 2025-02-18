@@ -39,14 +39,18 @@ jobs:
             echo "CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';" > /tmp/docker-entrypoint-initdb.d/init.sql
             docker container run \
               --detach \
-              --network testnet \
-              --name postgres \
-              --env POSTGRES_USER=postgres \
-              --env POSTGRES_PASSWORD=postgres \
-              --env POSTGRES_DB=postgres \
+              --network=testnet \
+              --name=postgres \
               --tmpfs /var/lib/postgresql/data \
               --volume /tmp/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d \
               postgres:17.3
+            docker container run \
+              --tty --rm \
+              --network=testnet \
+              --name=postgres_wait \
+              --entrypoint=/bin/bash \
+              postgres:17.3 \
+              -c "pg_isready --host=postgres --port=5432 --username=tournaments_test --dbname=postgres --timeout=10"
       - run:
           name: Run Odoo tests
           command: |
