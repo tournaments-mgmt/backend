@@ -49,7 +49,7 @@ jobs:
               --name postgres_wait \
               --entrypoint /bin/bash \
               postgres:17.3 \
-              -c "RETRY_COUNT=0; RETRY_MAX=10; while ! pg_isready --host=postgres; RETRY_COUNT=$(($RETRY_COUNT + 1)); do if [ $RETRY_COUNT -ge $RETRY_MAX ]; then exit 1; fi; sleep 1; done"
+              -c "RETRY_COUNT=0; RETRY_MAX=15; while ! pg_isready --host=postgres; RETRY_COUNT=\"$(($RETRY_COUNT + 1))\"; do if [ \"${RETRY_COUNT}\" -ge \"${RETRY_MAX}\" ]; then exit 1; fi; sleep 1; done"
             docker container run \
               --tty --rm \
               --network testnet \
