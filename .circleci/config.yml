@@ -35,17 +35,13 @@ jobs:
       - run:
           name: Run PostgreSQL test server
           command: |
-            mkdir -p /tmp/docker-entrypoint-initdb.d
-            echo "CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';" > /tmp/docker-entrypoint-initdb.d/init.sql
             docker container run \
               --detach \
               --network testnet \
               --name postgres \
               --env POSTGRES_USER=postgres \
               --env POSTGRES_PASSWORD=postgres \
-              --env POSTGRES_HOST_AUTH_METHOD=trust \
               --tmpfs /var/lib/postgresql/data \
-              --volume /tmp/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d \
               postgres:17.3
             RETRY_COUNT=0
             RETRY_MAX=10
@@ -56,6 +52,13 @@ jobs:
               fi
               sleep 1
             done
+            docker container run \
+              --rm --tty \
+              --network testnet \
+              --env PGPASSWORD=postgres \
+              --entrypoint=/usr/bin/psql \
+              postgres:17.3 \
+              --host=postgres --port=5432 --username=postgres --no-password --command="CREATE USER tournaments_test CREATEDB ENCRYPTED PASSWORD 'tournaments_test';"
       - run:
           name: Run Odoo tests
           command: |
