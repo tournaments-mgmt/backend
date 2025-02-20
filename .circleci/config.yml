@@ -90,6 +90,17 @@ jobs:
           command: |
             docker container stop postgres
             docker container rm postgres
+  release:
+    executor: linux-x86_64
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Create Docker network
+          command: |
+            docker image pull sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1}
+            docker image tag sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1} sardylan/tournaments-mgmt-backend:${CIRCLE_TAG}
+            docker image push sardylan/tournaments-mgmt-backend:${CIRCLE_TAG}
 workflows:
   test_and_build:
     jobs:
@@ -101,3 +112,12 @@ workflows:
             - "Docker Hub"
           requires:
             - build
+      - release:
+          context:
+            - "Docker Hub"
+          requires:
+            - build
+            - test
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
