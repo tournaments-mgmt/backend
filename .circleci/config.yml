@@ -43,6 +43,7 @@ jobs:
               --name postgres \
               --env POSTGRES_USER=postgres \
               --env POSTGRES_PASSWORD=postgres \
+              --env POSTGRES_HOST_AUTH_METHOD=trust \
               --tmpfs /var/lib/postgresql/data \
               --volume /tmp/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d \
               postgres:17.3
