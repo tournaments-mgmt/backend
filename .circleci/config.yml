@@ -130,6 +130,6 @@ workflows:
             - test
           filters:
             tags:
-              only: /^v\d+/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
