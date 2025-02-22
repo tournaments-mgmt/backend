@@ -107,11 +107,17 @@ workflows:
       - build:
           context:
             - "Docker Hub"
+          filters:
+            branches:
+              only: main
       - test:
           context:
             - "Docker Hub"
           requires:
             - build
+          filters:
+            branches:
+              only: main
       - release:
           context:
             - "Docker Hub"
@@ -122,4 +128,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only: /^v\d+/
