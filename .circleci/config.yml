@@ -110,6 +110,8 @@ workflows:
           filters:
             branches:
               only: main
+            tags:
+              ignore: /.*/
       - test:
           context:
             - "Docker Hub"
@@ -118,6 +120,8 @@ workflows:
           filters:
             branches:
               only: main
+            tags:
+              ignore: /.*/
       - release:
           context:
             - "Docker Hub"
