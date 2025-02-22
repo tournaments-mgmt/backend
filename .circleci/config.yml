@@ -118,11 +118,11 @@ workflows:
           filters:
             branches:
               only: main
-  release:
-    jobs:
       - release:
           context:
             - "Docker Hub"
           filters:
             tags:
               only: /^v\d+/
+            branches:
+              ignore: /.*/
