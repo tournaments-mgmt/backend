@@ -96,7 +96,10 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Create Docker network
+          name: Docker login
+          command: docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_TOKEN}"
+      - run:
+          name: Tag image and push
           command: |
             docker image pull sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1}
             docker image tag sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1} sardylan/tournaments-mgmt-backend:${CIRCLE_TAG}
