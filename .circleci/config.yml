@@ -102,14 +102,12 @@ jobs:
             docker image tag sardylan/tournaments-mgmt-backend:${CIRCLE_SHA1} sardylan/tournaments-mgmt-backend:${CIRCLE_TAG}
             docker image push sardylan/tournaments-mgmt-backend:${CIRCLE_TAG}
 workflows:
-  test_and_build:
+  test_build:
     jobs:
       - build:
           context:
             - "Docker Hub"
           filters:
-            tags:
-              ignore: /.*/
             branches:
               only: main
       - test:
@@ -118,10 +116,28 @@ workflows:
           requires:
             - build
           filters:
-            tags:
-              ignore: /.*/
             branches:
               only: main
+  test_build_release:
+    jobs:
+      - build:
+          context:
+            - "Docker Hub"
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+      - test:
+          context:
+            - "Docker Hub"
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
       - release:
           context:
             - "Docker Hub"
