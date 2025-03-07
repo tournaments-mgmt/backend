@@ -2,18 +2,38 @@
 
 <odoo noupdate="0">
 
-    <record id="access_tournaments_tournament_readonly" model="ir.model.access">
-        <field name="name">tournaments.tournament: Readonly access</field>
+    <record id="access_tournaments_tournament_showcase" model="ir.model.access">
+        <field name="name">tournaments.tournament: Showcase</field>
         <field name="model_id" ref="model_tournaments_tournament"/>
-        <field name="group_id" ref="group_profile_user"/>
+        <field name="group_id" ref="group_profile_showcase"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_unlink" eval="False"/>
     </record>
 
-    <record id="access_tournaments_tournament_full" model="ir.model.access">
-        <field name="name">tournaments.tournament: Full access</field>
+    <record id="access_tournaments_tournament_entrant" model="ir.model.access">
+        <field name="name">tournaments.tournament: Entrant</field>
+        <field name="model_id" ref="model_tournaments_tournament"/>
+        <field name="group_id" ref="group_profile_entrant"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_tournaments_tournament_user" model="ir.model.access">
+        <field name="name">tournaments.tournament: User</field>
+        <field name="model_id" ref="model_tournaments_tournament"/>
+        <field name="group_id" ref="group_profile_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="access_tournaments_tournament_manager" model="ir.model.access">
+        <field name="name">tournaments.tournament: Manager</field>
         <field name="model_id" ref="model_tournaments_tournament"/>
         <field name="group_id" ref="group_profile_manager"/>
         <field name="perm_read" eval="True"/>

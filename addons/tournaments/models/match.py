@@ -79,23 +79,6 @@ class Match(models.Model):
         related="platform_id.logo_image"
     )
 
-    # match_entrant_ids = fields.One2many(
-    #     string="Entrants",
-    #     help="Entrant players",
-    #     comodel_name="tournaments.match.entrant",
-    #     inverse_name="match_id",
-    #     domain="[('tournament_entrant_id.tournament_id', '=', tournament_id)]",
-    #     copy=False,
-    #     tracking=True,
-    # )
-
-    # match_entrant_count = fields.Integer(
-    #     string="Entrants count",
-    #     help="Entrant players count",
-    #     compute="_compute_match_entrant_count",
-    #     store=True
-    # )
-
     bracket_step = fields.Integer(
         string="Step",
         help="Step in bracket",
@@ -120,20 +103,37 @@ class Match(models.Model):
         readonly=True
     )
 
-    # match_result_ids = fields.One2many(
-    #     string="Results",
-    #     help="Match Results",
-    #     comodel_name="tournaments.match.result",
-    #     inverse_name="match_id"
-    # )
-    #
-    # winner_match_entrant_id = fields.Many2one(
-    #     string="Winner Match Entrant",
-    #     help="Winner Match Entrant",
-    #     comodel_name="tournaments.match.entrant",
-    #     domain="[('id', 'in', match_entrant_ids)]",
-    #     tracking=True
-    # )
+    entrant_id_a = fields.Many2one(
+        string="Entrant A",
+        help="First entrant",
+        comodel_name="tournaments.entrant",
+    )
+
+    entrant_id_b = fields.Many2one(
+        string="Entrant B",
+        help="Second entrant",
+        comodel_name="tournaments.entrant",
+    )
+
+    score_a = fields.Integer(
+        string="Score A",
+        help="Score of first entrant",
+        default=0,
+        required=True
+    )
+
+    score_b = fields.Integer(
+        string="Score B",
+        help="Score of second entrant",
+        default=0,
+        required=True
+    )
+
+    winner_entrant_id = fields.Many2one(
+        string="Winner",
+        help="Winner entrant",
+        comodel_name="tournaments.entrant"
+    )
 
     @api.model_create_multi
     @api.returns("self", lambda value: value.id)
@@ -168,20 +168,24 @@ class Match(models.Model):
     #     for rec in self:
     #         rec.match_entrant_count = len(rec.match_entrant_ids)
 
-    # @api.depends("match_entrant_ids")
+    @api.depends("tournament_id", "entrant_id_a", "entrant_id_b")
     def _compute_name(self):
         for rec in self:
             if not rec.tournament_id:
                 rec.name = False
 
             items: list[str] = [
-                rec.tournament_id.name_get()[0][1]
+                rec.tournament_id.name
             ]
 
             if rec.tournament_id.type == "bracket":
                 items.append(rec.bracket_phase_name)
 
-            entrant_items: list[str] = [x.name_get()[0][1] for x in rec.match_entrant_ids.tournament_entrant_id]
+            entrant_items: list[str] = []
+            if rec.entrant_id_a:
+                entrant_items.append(rec.entrant_id_a.name)
+            if rec.entrant_id_b:
+                entrant_items.append(rec.entrant_id_b.name)
             if not entrant_items:
                 entrant_items = [f"{rec.bracket_num}"]
 

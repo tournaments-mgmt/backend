@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_entrant_list" model="ir.ui.view">
+        <field name="name">tournaments.entrant: List view</field>
+        <field name="model">tournaments.entrant</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="tournament_id"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_entrant_form" model="ir.ui.view">
+        <field name="name">tournaments.entrant: Form view</field>
+        <field name="model">tournaments.entrant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <label for="tournament_id"/>
+                    <h2 class="w-50">
+                        <field name="tournament_id"/>
+                    </h2>
+                    <label for="user_id"/>
+                    <h2 class="w-50">
+                        <field name="user_id"/>
+                    </h2>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_entrant_search" model="ir.ui.view">
+        <field name="name">tournaments.entrant: Search view</field>
+        <field name="model">tournaments.entrant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="tournament_id"/>
+                <field name="user_id"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_tournament_id" string="Tournament" context="{'group_by': 'tournament_id'}"/>
+                    <filter name="group_by_user_id" string="User" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

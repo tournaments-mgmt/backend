@@ -2,6 +2,16 @@
 
 <odoo noupdate="0">
 
+    <record model="res.groups" id="group_profile_entrant">
+        <field name="name">Entrant</field>
+        <field name="category_id" ref="category_tournaments"/>
+    </record>
+
+    <record model="res.groups" id="group_profile_showcase">
+        <field name="name">Showcase</field>
+        <field name="category_id" ref="category_tournaments"/>
+    </record>
+
     <record model="res.groups" id="group_profile_user">
         <field name="name">User</field>
         <field name="category_id" ref="category_tournaments"/>

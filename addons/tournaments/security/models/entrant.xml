@@ -2,9 +2,9 @@
 
 <odoo noupdate="0">
 
-    <record id="access_tournaments_match_showcase" model="ir.model.access">
-        <field name="name">tournaments.match: Showcase</field>
-        <field name="model_id" ref="model_tournaments_match"/>
+    <record id="access_tournaments_entrant_showcase" model="ir.model.access">
+        <field name="name">tournaments.entrant: Showcase</field>
+        <field name="model_id" ref="model_tournaments_entrant"/>
         <field name="group_id" ref="group_profile_showcase"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -12,19 +12,20 @@
         <field name="perm_unlink" eval="False"/>
     </record>
 
-    <record id="access_tournaments_match_entrant" model="ir.model.access">
-        <field name="name">tournaments.match: Entrant</field>
-        <field name="model_id" ref="model_tournaments_match"/>
-        <field name="group_id" ref="group_profile_entrant"/>
+    <record id="rule_tournaments_entrant_entrant" model="ir.rule">
+        <field name="name">tournaments.entrant: Entrant</field>
+        <field name="model_id" ref="model_tournaments_token"/>
+        <field name="groups" eval="[(4, ref('tournaments.group_profile_entrant'))]"/>
+        <field name="domain_force">[('res_users_id', '=', user.id)]</field>
         <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="False"/>
+        <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_unlink" eval="False"/>
     </record>
 
-    <record id="access_tournaments_match_user" model="ir.model.access">
-        <field name="name">tournaments.match: User</field>
-        <field name="model_id" ref="model_tournaments_match"/>
+    <record id="access_tournaments_entrant_user" model="ir.model.access">
+        <field name="name">tournaments.entrant: User</field>
+        <field name="model_id" ref="model_tournaments_entrant"/>
         <field name="group_id" ref="group_profile_user"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
@@ -32,9 +33,9 @@
         <field name="perm_unlink" eval="True"/>
     </record>
 
-    <record id="access_tournaments_match_manager" model="ir.model.access">
-        <field name="name">tournaments.match: Manager</field>
-        <field name="model_id" ref="model_tournaments_match"/>
+    <record id="access_tournaments_entrant_manager" model="ir.model.access">
+        <field name="name">tournaments.entrant: Manager</field>
+        <field name="model_id" ref="model_tournaments_entrant"/>
         <field name="group_id" ref="group_profile_manager"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
