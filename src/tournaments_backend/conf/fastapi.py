@@ -119,9 +119,9 @@ def create_instance() -> FastAPI:
     instance: FastAPI = FastAPI(
         title="Tournaments Management API",
         version=APP_VERSION,
-        docs_url=None,
-        redoc_url=None,
-        openapi_url="/docs/openapi.json",
+        # docs_url=None,
+        # redoc_url=None,
+        # openapi_url="/docs/openapi.json",
         lifespan=lifespan,
     )
 
@@ -131,7 +131,7 @@ def create_instance() -> FastAPI:
     _register_apis(instance)
     _register_middlewares(instance)
     _register_handlers(instance)
-    _register_docs(instance)
+    # _register_docs(instance)
     _register_probes_controller(instance)
 
     return instance
