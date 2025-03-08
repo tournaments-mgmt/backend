@@ -18,7 +18,7 @@ class ExtID(models.AbstractModel):
         default=lambda self: self._default_extid()
     )
 
-    qrcode_image = fields.Binary(
+    extid_qrcode = fields.Binary(
         string="QRCode",
         help="QRCode",
         compute="_compute_qrcode_image"
@@ -30,7 +30,7 @@ class ExtID(models.AbstractModel):
     @api.depends("extid")
     def _compute_qrcode_image(self):
         for rec in self:
-            rec.qrcode_image = self.generate_qr_image(rec.extid)
+            rec.extid_qrcode = self.generate_qr_image(rec.extid)
 
     @api.model
     def generate_qr_image(self, content: str) -> bytes:

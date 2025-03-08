@@ -10,6 +10,9 @@
                 <field name="name"/>
                 <field name="tournament_id"/>
                 <field name="user_id"/>
+                <field name="confirmed"/>
+                <field name="ts_confirmed"/>
+                <field name="extid"/>
             </list>
         </field>
     </record>
@@ -20,20 +23,37 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name"/>
-                        <h1>
-                            <field name="name"/>
-                        </h1>
+                    <div class="d-flex row">
+                        <div class="d-flex col-9">
+                            <div class="col">
+                                <div class="row">
+                                    <label for="name"/>
+                                    <h1>
+                                        <field name="name"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <label for="tournament_id"/>
+                                    <h2>
+                                        <field name="tournament_id"/>
+                                    </h2>
+                                </div>
+                                <div class="row">
+                                    <label for="user_id"/>
+                                    <h2>
+                                        <field name="user_id"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex col-3 justify-content-end align-items-center">
+                            <field name="extid_qrcode" widget="image"/>
+                        </div>
                     </div>
-                    <label for="tournament_id"/>
-                    <h2 class="w-50">
-                        <field name="tournament_id"/>
-                    </h2>
-                    <label for="user_id"/>
-                    <h2 class="w-50">
-                        <field name="user_id"/>
-                    </h2>
+                    <group name="group_confirmed" string="Confirmation">
+                        <field name="confirmed"/>
+                        <field name="ts_confirmed"/>
+                    </group>
                 </sheet>
                 <chatter reload_on_post="True"/>
             </form>

@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <div class="d-flex col-3 justify-content-end align-items-center">
-                            <field name="qrcode_image" widget="image"/>
+                            <field name="extid_qrcode" widget="image"/>
                         </div>
                     </div>
                     <group name="group_datetime">
