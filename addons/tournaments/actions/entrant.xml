@@ -3,7 +3,7 @@
 <odoo noupdate="0">
 
     <record id="action_entrant_list" model="ir.actions.act_window">
-        <field name="name">entrants</field>
+        <field name="name">Entrants</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">tournaments.entrant</field>
         <field name="view_mode">list,form</field>
