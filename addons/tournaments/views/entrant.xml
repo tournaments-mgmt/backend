@@ -39,10 +39,18 @@
                                     </h2>
                                 </div>
                                 <div class="row">
-                                    <label for="user_id"/>
-                                    <h2>
-                                        <field name="user_id"/>
-                                    </h2>
+                                    <div class="col">
+                                        <label for="nickname_id"/>
+                                        <h2>
+                                            <field name="nickname_id"/>
+                                        </h2>
+                                    </div>
+                                    <div class="col">
+                                        <label for="user_id"/>
+                                        <h2>
+                                            <field name="user_id"/>
+                                        </h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>

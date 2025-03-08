@@ -2,7 +2,7 @@ import datetime
 import secrets
 import string
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class Token(models.Model):
@@ -33,7 +33,15 @@ class Token(models.Model):
         string="Expiration",
         help="Token expiration date",
         required=True,
+        readonly=True,
         default=lambda self: self._default_ts_expiration(),
+    )
+
+    expired = fields.Boolean(
+        string="Expired",
+        help="Token expired",
+        compute="_compute_expired",
+        readonly=True
     )
 
     def _default_value(self) -> str:
@@ -41,3 +49,8 @@ class Token(models.Model):
 
     def _default_ts_expiration(self) -> datetime.datetime:
         return fields.Datetime.now() + datetime.timedelta(hours=4)
+
+    @api.depends("ts_expiration")
+    def _compute_expired(self) -> None:
+        for rec in self:
+            rec.expired = fields.Datetime.now() - rec.ts_expiration < datetime.timedelta(hours=4)

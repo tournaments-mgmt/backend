@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="access_tournaments_badword_showcase" model="ir.model.access">
+        <field name="name">tournaments.badword: Showcase</field>
+        <field name="model_id" ref="model_tournaments_badword"/>
+        <field name="group_id" ref="group_profile_showcase"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_tournaments_badword_entrant" model="ir.model.access">
+        <field name="name">tournaments.badword: Entrant</field>
+        <field name="model_id" ref="model_tournaments_badword"/>
+        <field name="group_id" ref="group_profile_entrant"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="access_tournaments_badword_user" model="ir.model.access">
+        <field name="name">tournaments.badword: User</field>
+        <field name="model_id" ref="model_tournaments_badword"/>
+        <field name="group_id" ref="group_profile_user"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

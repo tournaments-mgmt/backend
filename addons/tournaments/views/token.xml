@@ -10,6 +10,7 @@
                 <field name="res_users_id"/>
                 <field name="value"/>
                 <field name="ts_expiration"/>
+                <field name="expired"/>
             </list>
         </field>
     </record>
@@ -18,7 +19,7 @@
         <field name="name">tournaments.token: Form view</field>
         <field name="model">tournaments.token</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false" edit="false" duplicate="false">
                 <sheet>
                     <div class="row oe_title">
                         <label for="value"/>
@@ -33,6 +34,7 @@
                     <group>
                         <group>
                             <field name="ts_expiration"/>
+                            <field name="expired"/>
                         </group>
                     </group>
                 </sheet>

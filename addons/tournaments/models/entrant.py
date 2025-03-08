@@ -13,15 +13,10 @@ class Entrant(models.Model):
         "mail.activity.mixin"
     ]
 
-    _sql_constraints = [
-        ("name_tournament_uniq", "UNIQUE (name, tournament_id)", "There is another entrant with the same name"),
-        ("name_tournament_user_uniq", "UNIQUE NULLS DISTINCT (name, user_id, tournament_id)", "Entrant already exists")
-    ]
-
     name = fields.Char(
         string="Name",
-        help="The name of the entrant",
-        tracking=True
+        related="nickname_id.nickname",
+        store=True
     )
 
     tournament_id = fields.Many2one(
@@ -32,11 +27,19 @@ class Entrant(models.Model):
         tracking=True
     )
 
+    nickname_id = fields.Many2one(
+        string="Nickname",
+        help="The nickname of the entrant",
+        comodel_name="tournaments.nickname",
+        domain="[]",
+        required=True,
+        tracking=True
+    )
+
     user_id = fields.Many2one(
-        string="User",
-        help="The user this entrant belongs to",
-        comodel_name="res.users",
-        required=False,
+        related="nickname_id.user_id",
+        readonly=True,
+        store=True,
         tracking=True
     )
 

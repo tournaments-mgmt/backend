@@ -19,6 +19,12 @@
                   action="action_entrant_list"
                   sequence="0"/>
 
+        <menuitem id="menu_nicknames_list"
+                  name="Nicknames"
+                  parent="menu_entrants"
+                  action="action_nickname_list"
+                  sequence="0"/>
+
     <!--    <menuitem id="menu_entrants_search_qr"-->
     <!--              name="Search with QR-Code"-->
     <!--              parent="menu_entrants"-->
@@ -92,5 +98,11 @@
               parent="menu_service"
               action="action_token_list"
               sequence="0"/>
+
+    <menuitem id="menu_service_badwords"
+              name="Badwords"
+              parent="menu_service"
+              action="action_badword_list"
+              sequence="10"/>
 
 </odoo>

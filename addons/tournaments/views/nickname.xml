@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_nickname_list" model="ir.ui.view">
+        <field name="name">tournaments.nickname: List view</field>
+        <field name="model">tournaments.nickname</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nickname"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_nickname_form" model="ir.ui.view">
+        <field name="name">tournaments.nickname: Form view</field>
+        <field name="model">tournaments.nickname</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="nickname"/>
+                        <h1>
+                            <field name="nickname"/>
+                        </h1>
+                    </div>
+                    <label for="user_id"/>
+                    <h2 class="w-50">
+                        <field name="user_id"/>
+                    </h2>
+                </sheet>
+                <chatter reload_on_post="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_nickname_search" model="ir.ui.view">
+        <field name="name">tournaments.nickname: Search view</field>
+        <field name="model">tournaments.nickname</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nickname"/>
+                <field name="user_id"/>
+                <separator/>
+                <group>
+                    <filter name="groupby_user_id"
+                            string="User"
+                            context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
