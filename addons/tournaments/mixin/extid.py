@@ -15,13 +15,11 @@ class ExtID(models.AbstractModel):
         string="External ID",
         help="External ID",
         required=True,
-        default=lambda self: self._default_extid()
+        default=lambda self: self._default_extid(),
     )
 
     extid_qrcode = fields.Binary(
-        string="QRCode",
-        help="QRCode",
-        compute="_compute_qrcode_image"
+        string="QRCode", help="QRCode", compute="_compute_qrcode_image"
     )
 
     def _default_extid(self) -> str:

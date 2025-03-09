@@ -6,14 +6,7 @@
     "sequence": 0,
     "author": "",
     "license": "GPL-3",
-    "depends": [
-        "base",
-        "base_setup"
-    ],
-    "data": [
-        "data/ir_config_parameter.xml",
-
-        "wizards/inherit_res_config_settings.xml"
-    ],
-    "application": False
+    "depends": ["base", "base_setup"],
+    "data": ["data/ir_config_parameter.xml", "wizards/inherit_res_config_settings.xml"],
+    "application": False,
 }

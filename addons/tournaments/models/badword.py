@@ -6,18 +6,8 @@ class BadWord(models.Model):
     _description = "Bad Word"
     _rec_name = "word"
 
-    _sql_constraints = [
-        ("word_uniq", "UNIQUE (word)", "Word must be unique!")
-    ]
+    _sql_constraints = [("word_uniq", "UNIQUE (word)", "Word must be unique!")]
 
-    _inherit = [
-        "mail.thread",
-        "mail.activity.mixin"
-    ]
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    word = fields.Char(
-        string="Word",
-        help="Word",
-        readonly=False,
-        tracking=True
-    )
+    word = fields.Char(string="Word", help="Word", readonly=False, tracking=True)

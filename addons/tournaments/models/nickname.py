@@ -11,11 +11,7 @@ class Nickname(models.Model):
         ("name_uniq", "UNIQUE(nickname)", "Name must be unique!"),
     ]
 
-    _inherit = [
-        "tournaments.extid",
-        "mail.thread",
-        "mail.activity.mixin"
-    ]
+    _inherit = ["tournaments.extid", "mail.thread", "mail.activity.mixin"]
 
     nickname = fields.Char(
         string="Name",
@@ -52,5 +48,8 @@ class Nickname(models.Model):
         if len(nickname) < 3 or len(nickname) > 64:
             raise ValidationError("Nickname must be between 3 and 64 characters long")
 
-        if self.env["tournaments.badword"].search_count([("word", "ilike", nickname)]) > 0:
+        if (
+            self.env["tournaments.badword"].search_count([("word", "ilike", nickname)])
+            > 0
+        ):
             raise ValidationError("Nickname invalid")

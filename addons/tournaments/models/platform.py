@@ -5,22 +5,22 @@ class Platform(models.Model):
     _name = "tournaments.platform"
     _description = "Platform"
 
-    _inherit = [
-        "mail.thread",
-        "mail.activity.mixin"
-    ]
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     _sql_constraints = [
-        ("name_uniq", "UNIQUE (name)", "There is another Platform with the same name. Names must be unique."),
-        ("tag_uniq", "UNIQUE (tag)", "There is another Platform with the same tag. Tags must be unique.")
+        (
+            "name_uniq",
+            "UNIQUE (name)",
+            "There is another Platform with the same name. Names must be unique.",
+        ),
+        (
+            "tag_uniq",
+            "UNIQUE (tag)",
+            "There is another Platform with the same tag. Tags must be unique.",
+        ),
     ]
 
-    active = fields.Boolean(
-        string="Active",
-        help="Active",
-        default=True,
-        tracking=True
-    )
+    active = fields.Boolean(string="Active", help="Active", default=True, tracking=True)
 
     name = fields.Char(
         string="Name",
@@ -41,7 +41,7 @@ class Platform(models.Model):
         relation="tournaments_game_supported_platform_rel",
         column1="platform_id",
         column2="game_id",
-        readonly=True
+        readonly=True,
     )
 
     logo_image = fields.Image(
@@ -52,7 +52,4 @@ class Platform(models.Model):
         verify_resolution=True,
     )
 
-    note = fields.Html(
-        string="Note",
-        help="Note"
-    )
+    note = fields.Html(string="Note", help="Note")

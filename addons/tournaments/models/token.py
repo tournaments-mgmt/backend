@@ -18,7 +18,7 @@ class Token(models.Model):
         help="Token value",
         required=True,
         default=lambda self: self._default_value(),
-        readonly=True
+        readonly=True,
     )
 
     res_users_id = fields.Many2one(
@@ -26,7 +26,7 @@ class Token(models.Model):
         help="Related user",
         comodel_name="res.users",
         required=True,
-        readonly=True
+        readonly=True,
     )
 
     ts_expiration = fields.Datetime(
@@ -41,11 +41,13 @@ class Token(models.Model):
         string="Expired",
         help="Token expired",
         compute="_compute_expired",
-        readonly=True
+        readonly=True,
     )
 
     def _default_value(self) -> str:
-        return "".join(secrets.choice(string.ascii_letters + string.digits) for _ in range(32))
+        return "".join(
+            secrets.choice(string.ascii_letters + string.digits) for _ in range(32)
+        )
 
     def _default_ts_expiration(self) -> datetime.datetime:
         return fields.Datetime.now() + datetime.timedelta(hours=4)
@@ -53,4 +55,6 @@ class Token(models.Model):
     @api.depends("ts_expiration")
     def _compute_expired(self) -> None:
         for rec in self:
-            rec.expired = fields.Datetime.now() - rec.ts_expiration < datetime.timedelta(hours=4)
+            rec.expired = (
+                fields.Datetime.now() - rec.ts_expiration < datetime.timedelta(hours=4)
+            )

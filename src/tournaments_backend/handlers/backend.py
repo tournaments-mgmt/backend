@@ -1,7 +1,12 @@
 from starlette import status
 from starlette.responses import JSONResponse
 
-from tournaments_backend.errors.backend import BackendError, AuthenticationError, AuthorizationError, InvalidTokenError
+from tournaments_backend.errors.backend import (
+    BackendError,
+    AuthenticationError,
+    AuthorizationError,
+    InvalidTokenError,
+)
 
 
 def register(app):

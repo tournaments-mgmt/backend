@@ -75,7 +75,9 @@ class TestMaxMindGeoIPMixin(TransactionCase):
         assert mixin_obj.maxmind_lookup_asn("1.0.0.1")
 
     def _define_maxmind_database_paths(self):
-        test_assets_path: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static", "test"))
+        test_assets_path: str = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "..", "static", "test")
+        )
         city_path: str = os.path.join(test_assets_path, "GeoLite2-City-Test.mmdb")
         asn_path: str = os.path.join(test_assets_path, "GeoLite2-ASN-Test.mmdb")
 

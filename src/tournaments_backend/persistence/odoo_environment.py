@@ -19,7 +19,9 @@ _logger = logging.getLogger(__name__)
 def configure() -> None:
     _logger.info("Configuring Odoo")
 
-    addons_path: str = ",".join(list(map(lambda x: os.path.abspath(x), config.ADDONS_PATH)))
+    addons_path: str = ",".join(
+        list(map(lambda x: os.path.abspath(x), config.ADDONS_PATH))
+    )
     data_dir: str = os.path.abspath(config.DATADIR)
 
     args: List[str] = [
@@ -32,7 +34,7 @@ def configure() -> None:
         f"--database={config.DB_NAME}",
         # f"--load-language=en",
         f"--without-demo=all",
-        f"--init={','.join(config.ADDONS_LIST)}"
+        f"--init={','.join(config.ADDONS_LIST)}",
     ]
 
     odoo.netsvc._logger_init = True
@@ -63,7 +65,9 @@ async def odoo_env_superuser() -> AsyncGenerator[Environment, None]:
         yield odoo_env
 
 
-async def odoo_env_web_token(request: Request = None, websocket: WebSocket = None) -> AsyncGenerator[Environment, None]:
+async def odoo_env_web_token(
+    request: Request = None, websocket: WebSocket = None
+) -> AsyncGenerator[Environment, None]:
     if request is not None:
         authorization_header: str | None = request.headers.get("Authorization", None)
         if not authorization_header:
@@ -96,7 +100,9 @@ async def odoo_env_web_token(request: Request = None, websocket: WebSocket = Non
         yield odoo_env
 
 
-async def odoo_env_token(request: Request = None, websocket: WebSocket = None) -> AsyncGenerator[Environment, None]:
+async def odoo_env_token(
+    request: Request = None, websocket: WebSocket = None
+) -> AsyncGenerator[Environment, None]:
     if request is not None:
         authorization_header: str | None = request.headers.get("Authorization", None)
         if not authorization_header:
@@ -138,11 +144,11 @@ class OdooEnv:
     _test_mode: bool
 
     def __init__(
-            self,
-            user_id: int = odoo.SUPERUSER_ID,
-            context: dict | None = None,
-            cr: Cursor | None = None,
-            test_mode: bool = False
+        self,
+        user_id: int = odoo.SUPERUSER_ID,
+        context: dict | None = None,
+        cr: Cursor | None = None,
+        test_mode: bool = False,
     ):
         self._user_id = user_id
 
@@ -159,7 +165,9 @@ class OdooEnv:
 
         db_name: str = odoo.tools.config["db_name"]
 
-        self._registry: Registry = odoo.modules.registry.Registry(db_name).check_signaling()
+        self._registry: Registry = odoo.modules.registry.Registry(
+            db_name
+        ).check_signaling()
         if self._registry.in_test_mode():
             _logger.info(f"Odoo Env already in test mode")
 

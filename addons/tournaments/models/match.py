@@ -16,7 +16,7 @@ class Match(models.Model):
         "tournaments.scheduled",
         "tournaments.extid",
         "mail.thread",
-        "mail.activity.mixin"
+        "mail.activity.mixin",
     ]
 
     name = fields.Char(
@@ -25,7 +25,7 @@ class Match(models.Model):
         compute="_compute_name",
         copy=False,
         tracking=True,
-        store=True
+        store=True,
     )
 
     tournament_id = fields.Many2one(
@@ -33,74 +33,49 @@ class Match(models.Model):
         help="Related tournament",
         comodel_name="tournaments.tournament",
         required=True,
-        readonly=True
+        readonly=True,
     )
 
-    tournament_type = fields.Selection(
-        related="tournament_id.type",
-        store=True
-    )
+    tournament_type = fields.Selection(related="tournament_id.type", store=True)
 
     order_num = fields.Integer(
-        string="Order",
-        help="Order number",
-        required=True,
-        default=0
+        string="Order", help="Order number", required=True, default=0
     )
 
-    scheduled_start = fields.Datetime(
-        required=False
-    )
+    scheduled_start = fields.Datetime(required=False)
 
     game_id = fields.Many2one(
-        string="Game",
-        related="tournament_id.game_id",
-        store=True
+        string="Game", related="tournament_id.game_id", store=True
     )
 
-    game_logo_image = fields.Image(
-        string="Game Logo",
-        related="game_id.logo_image"
-    )
+    game_logo_image = fields.Image(string="Game Logo", related="game_id.logo_image")
 
     game_pegi_age_logo = fields.Image(
-        string="Game Tournament PEGI Age Label",
-        related="game_id.pegi_age_id.logo"
+        string="Game Tournament PEGI Age Label", related="game_id.pegi_age_id.logo"
     )
 
     platform_id = fields.Many2one(
-        string="Platform",
-        related="tournament_id.platform_id",
-        store=True
+        string="Platform", related="tournament_id.platform_id", store=True
     )
 
     platform_logo_image = fields.Image(
-        string="Platform Logo",
-        related="platform_id.logo_image"
+        string="Platform Logo", related="platform_id.logo_image"
     )
 
-    bracket_step = fields.Integer(
-        string="Step",
-        help="Step in bracket",
-        readonly=True
-    )
+    bracket_step = fields.Integer(string="Step", help="Step in bracket", readonly=True)
 
     bracket_phase = fields.Integer(
-        string="Phase",
-        help="Phase of the bracket",
-        readonly=True
+        string="Phase", help="Phase of the bracket", readonly=True
     )
 
     bracket_phase_name = fields.Char(
         string="Bracket Phase",
         help="Bracket Phase",
-        compute="_compute_bracket_phase_name"
+        compute="_compute_bracket_phase_name",
     )
 
     bracket_num = fields.Integer(
-        string="Num",
-        help="Progressive number in phase",
-        readonly=True
+        string="Num", help="Progressive number in phase", readonly=True
     )
 
     entrant_id_a = fields.Many2one(
@@ -116,23 +91,15 @@ class Match(models.Model):
     )
 
     score_a = fields.Integer(
-        string="Score A",
-        help="Score of first entrant",
-        default=0,
-        required=True
+        string="Score A", help="Score of first entrant", default=0, required=True
     )
 
     score_b = fields.Integer(
-        string="Score B",
-        help="Score of second entrant",
-        default=0,
-        required=True
+        string="Score B", help="Score of second entrant", default=0, required=True
     )
 
     winner_entrant_id = fields.Many2one(
-        string="Winner",
-        help="Winner entrant",
-        comodel_name="tournaments.entrant"
+        string="Winner", help="Winner entrant", comodel_name="tournaments.entrant"
     )
 
     @api.model_create_multi
@@ -174,9 +141,7 @@ class Match(models.Model):
             if not rec.tournament_id:
                 rec.name = False
 
-            items: list[str] = [
-                rec.tournament_id.name
-            ]
+            items: list[str] = [rec.tournament_id.name]
 
             if rec.tournament_id.type == "bracket":
                 items.append(rec.bracket_phase_name)
@@ -196,10 +161,12 @@ class Match(models.Model):
     def _compute_bracket_phase_name(self):
         for rec in self:
             if rec.bracket_phase <= 1:
-                final_matches_count = self.search_count([
-                    ("tournament_id", "=", rec.tournament_id.id),
-                    ("bracket_step", "=", 0)
-                ])
+                final_matches_count = self.search_count(
+                    [
+                        ("tournament_id", "=", rec.tournament_id.id),
+                        ("bracket_step", "=", 0),
+                    ]
+                )
                 if final_matches_count > 1 and rec.bracket_num == 0:
                     bracket_phase_name = _("Final 3rd4th")
                 else:
@@ -213,7 +180,9 @@ class Match(models.Model):
             elif rec.bracket_phase <= 8:
                 rec.bracket_phase_name = _("Eighth-finals")
             else:
-                rec.bracket_phase_name = _("%s-finals") % numbers.ordinal(rec.bracket_phase)
+                rec.bracket_phase_name = _("%s-finals") % numbers.ordinal(
+                    rec.bracket_phase
+                )
 
     def action_start(self, propagate: bool = True):
         # for rec in self:

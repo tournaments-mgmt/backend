@@ -18,7 +18,7 @@ async def generate_services(instance: FastAPI):
     _logger.debug("Generating WebTokenService")
     instance.state.webtoken_service = WebTokenService(
         sign_key=config.JWT_SIGN_KEY.encode().decode("unicode_escape"),
-        encrypt_key=config.JWT_ENCRYPT_KEY
+        encrypt_key=config.JWT_ENCRYPT_KEY,
     )
 
     _logger.debug("Generating AuthenticationService")

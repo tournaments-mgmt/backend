@@ -4,7 +4,11 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 from fastapi import FastAPI
-from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html, get_redoc_html
+from fastapi.openapi.docs import (
+    get_swagger_ui_html,
+    get_swagger_ui_oauth2_redirect_html,
+    get_redoc_html,
+)
 from starlette import status
 from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
@@ -20,8 +24,9 @@ def _get_registrable_modules(parent_mod, component_name: str, mod_list: list = N
         mod_list = list()
 
     for mod in [
-        mod for name, mod in parent_mod.__dict__.items() if
-        inspect.ismodule(mod) and mod.__name__.startswith(parent_mod.__name__)
+        mod
+        for name, mod in parent_mod.__dict__.items()
+        if inspect.ismodule(mod) and mod.__name__.startswith(parent_mod.__name__)
     ]:
         _get_registrable_modules(mod, component_name, mod_list=mod_list)
         if component_name in mod.__dict__:
@@ -40,10 +45,7 @@ def _register_apis(instance: FastAPI) -> None:
         router_prefix: str = "/" + "/".join(module.__name__.split(".")[1:])
         _logger.debug(f"Prefix: {router_prefix}")
 
-        instance.include_router(
-            router=module.router,
-            prefix=router_prefix
-        )
+        instance.include_router(router=module.router, prefix=router_prefix)
 
 
 def _register_middlewares(instance: FastAPI) -> None:
@@ -67,7 +69,7 @@ def _register_docs(instance: FastAPI) -> None:
             oauth2_redirect_url=instance.swagger_ui_oauth2_redirect_url,
             swagger_js_url="/assets/swagger-ui-bundle.js",
             swagger_css_url="/assets/swagger-ui.css",
-            swagger_favicon_url="/assets/favicon.png"
+            swagger_favicon_url="/assets/favicon.png",
         )
 
     @instance.get(instance.swagger_ui_oauth2_redirect_url, include_in_schema=False)
@@ -81,7 +83,7 @@ def _register_docs(instance: FastAPI) -> None:
             title=instance.title + " - ReDoc",
             redoc_js_url="/assets/redoc.standalone.js",
             redoc_favicon_url="/assets/favicon.png",
-            with_google_fonts=False
+            with_google_fonts=False,
         )
 
 
@@ -95,11 +97,9 @@ def _register_probes_controller(instance: FastAPI) -> None:
         endpoint=healthz,
         status_code=status.HTTP_204_NO_CONTENT,
         responses={
-            status.HTTP_204_NO_CONTENT: {
-                "description": "API working correctly"
-            }
+            status.HTTP_204_NO_CONTENT: {"description": "API working correctly"}
         },
-        tags=["Internal Probes"]
+        tags=["Internal Probes"],
     )
 
 

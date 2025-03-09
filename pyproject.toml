@@ -73,7 +73,6 @@ uvicorn = "==0.34.0"
 uvloop = "==0.21.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "==25.1.0"
 pre-commit = "==4.1.0"
 pytest = "==8.3.4"
 pytest-asyncio = "==0.25.3"
@@ -81,15 +80,3 @@ httpx = "==0.28.1"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-
-[tool.black]
-target-version = ["py312"]
-line-length = 120
-extend-exclude = '''
-^/.circleci
-| ^/.github
-| ^/docker
-| ^/helm
-| ^/odoo
-'''
-include = '\.pyi?$'

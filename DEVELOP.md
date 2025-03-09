@@ -2,7 +2,7 @@
 
 ## Develop
 
-### Image building ###
+### Image building
 
 Build the development container with this command
 
@@ -10,7 +10,7 @@ Build the development container with this command
 docker image build --target=dev --tag=tournaments-mgmt-backend:dev .
 ```
 
-### Environment vars ###
+### Environment vars
 
 ```bash
 JWT_SIGN_KEY="-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBgL/kfqHKHq9nkUYtfmj7lFQ+OUb+ymd4VbzYUse4Ef\n-----END PRIVATE KEY-----\n"

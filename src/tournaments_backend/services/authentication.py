@@ -9,7 +9,6 @@ _logger = logging.getLogger(__name__)
 
 
 class AuthenticationService:
-
     @staticmethod
     async def authenticate(login: str, password: str, odoo_env: Environment) -> int:
         if not login or not password:
@@ -18,14 +17,8 @@ class AuthenticationService:
 
         kwargs: dict = {
             "db": odoo.tools.config["db_name"],
-            "credential": {
-                "type": "password",
-                "login": login,
-                "password": password
-            },
-            "user_agent_env": {
-                "interactive": False
-            }
+            "credential": {"type": "password", "login": login, "password": password},
+            "user_agent_env": {"interactive": False},
         }
 
         try:

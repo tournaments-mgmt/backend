@@ -44,7 +44,7 @@ class MaxMindGeoIP2Mixin(models.AbstractModel):
             raise ValidationError(_("DB not supported"))
 
         mmdb_path: str = ir_config_parameter_obj.get_param(param_name, "")
-        _logger.debug(f"Parameter {param_name}: \"{mmdb_path}\"")
+        _logger.debug(f'Parameter {param_name}: "{mmdb_path}"')
 
         if not mmdb_path:
             raise ValidationError(_("MaxMind database path not configured"))

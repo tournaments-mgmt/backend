@@ -13,12 +13,12 @@ class ConfigSkeleton:
 
     _parsing_type: dict = {
         list: lambda v: list(v.split(",")),
-        bool: lambda v: bool(v.strip().lower() in ["t", "true", "1"])
+        bool: lambda v: bool(v.strip().lower() in ["t", "true", "1"]),
     }
 
     _reverse_type: dict = {
         list: lambda v: str(",".join(v)),
-        bool: lambda v: str(v and "TRUE" or "FALSE")
+        bool: lambda v: str(v and "TRUE" or "FALSE"),
     }
 
     _config_file: dict
@@ -67,7 +67,9 @@ class ConfigSkeleton:
     def _parse_config_env(self) -> dict:
         pass
 
-    def print(self, logging_method: Callable = print, hide_secrets: List[str] = None) -> None:
+    def print(
+        self, logging_method: Callable = print, hide_secrets: List[str] = None
+    ) -> None:
         if hide_secrets is None:
             hide_secrets = ["PASS", "SECRET"]
 
@@ -77,7 +79,8 @@ class ConfigSkeleton:
             return name, value
 
         var_list: List[Tuple[str, Any]] = [
-            prepare_var(name, getattr(self, name)) for name, _ in vars(Config).items()
+            prepare_var(name, getattr(self, name))
+            for name, _ in vars(Config).items()
             if name.isupper()
         ]
 
@@ -87,7 +90,7 @@ class ConfigSkeleton:
 
         logging_method("#" * header_size)
 
-        for (var_name, var_value) in var_list:
+        for var_name, var_value in var_list:
             var_type = type(var_value)
             value = var_value
             if var_name in self._reverse_var:
@@ -104,7 +107,12 @@ class ConfigSkeleton:
         for key, value in dictionary.items():
             if isinstance(value, dict):
                 res.update(
-                    Config._flatten_dict(dictionary=value, separator=separator, prefix=f"{prefix}{key}{separator}"))
+                    Config._flatten_dict(
+                        dictionary=value,
+                        separator=separator,
+                        prefix=f"{prefix}{key}{separator}",
+                    )
+                )
             else:
                 res[f"{prefix}{key}".upper()] = value
         return res
@@ -132,7 +140,9 @@ class Config(ConfigSkeleton):
 
     LOG_LEVEL: int = logging.WARNING
     LOG_FORMAT: str = "%(asctime)s,%(msecs)d [%(levelname)07s] [%(process)s|%(thread)s] {%(processName)s} %(funcName)s {%(pathname)s:%(lineno)d}: %(message)s"
-    LOG_ACCESS_FORMAT: str = "%(asctime)s - %(client_addr)s - \"%(request_line)s\" %(status_code)s"
+    LOG_ACCESS_FORMAT: str = (
+        '%(asctime)s - %(client_addr)s - "%(request_line)s" %(status_code)s'
+    )
 
     DB_HOST: str = "postgres"
     DB_PORT: int = 5432
@@ -148,13 +158,9 @@ class Config(ConfigSkeleton):
     JWT_SIGN_KEY: str = ""
     JWT_ENCRYPT_KEY: str = ""
 
-    _parsing_var: dict = {
-        "LOG_LEVEL": lambda v: logging.getLevelName(v)
-    }
+    _parsing_var: dict = {"LOG_LEVEL": lambda v: logging.getLevelName(v)}
 
-    _reverse_var: dict = {
-        "LOG_LEVEL": lambda v: logging.getLevelName(v)
-    }
+    _reverse_var: dict = {"LOG_LEVEL": lambda v: logging.getLevelName(v)}
 
 
 config = Config()

@@ -6,6 +6,7 @@ import uvloop
 
 def main_cli() -> None:
     from tournaments_backend.config import config
+
     config.print()
 
     uvloop.install()
@@ -22,5 +23,5 @@ def main_cli() -> None:
         port=config.APP_PORT,
         workers=config.APP_WORKERS,
         log_level="info",
-        log_config=uvicorn_log_config
+        log_config=uvicorn_log_config,
     )

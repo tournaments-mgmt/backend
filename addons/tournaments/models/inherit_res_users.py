@@ -4,14 +4,9 @@ from odoo import models, fields, api
 
 
 class ResUsers(models.Model):
-    _inherit = [
-        "res.users"
-    ]
+    _inherit = ["res.users"]
 
-    nickname = fields.Char(
-        string="Nickname",
-        help="Nickname of the user"
-    )
+    nickname = fields.Char(string="Nickname", help="Nickname of the user")
 
     @api.model_create_multi
     def create(self, vals_list) -> typing.Self:

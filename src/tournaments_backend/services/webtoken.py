@@ -44,12 +44,16 @@ class WebTokenService:
         cipher = self._generate_cypher(iv)
         encryptor = cipher.encryptor()
 
-        encrypted_jwt: bytes = encryptor.update(encoded_jwt.encode()) + encryptor.finalize()
+        encrypted_jwt: bytes = (
+            encryptor.update(encoded_jwt.encode()) + encryptor.finalize()
+        )
         tag: bytes = encryptor.tag
 
-        return (base64.urlsafe_b64encode(tag).decode()
-                + base64.urlsafe_b64encode(iv).decode()
-                + base64.urlsafe_b64encode(encrypted_jwt).decode())
+        return (
+            base64.urlsafe_b64encode(tag).decode()
+            + base64.urlsafe_b64encode(iv).decode()
+            + base64.urlsafe_b64encode(encrypted_jwt).decode()
+        )
 
     async def decrypt(self, encrypted_data: str) -> dict:
         if len(encrypted_data) < IV_SIZE_B64:
@@ -63,16 +67,20 @@ class WebTokenService:
         decryptor = cipher.decryptor()
 
         try:
-            decrypted_jwt: bytes = decryptor.update(ciphertext) + decryptor.finalize_with_tag(tag)
+            decrypted_jwt: bytes = decryptor.update(
+                ciphertext
+            ) + decryptor.finalize_with_tag(tag)
             decoded_jwt = decrypted_jwt.decode()
             return jwt.decode(decoded_jwt, self._sign_key, algorithms=[JWT_ALGORITHM])
         except Exception as e:
-            _logger.error(f"Error verifying token signature: {e}\n{traceback.format_exc()}")
+            _logger.error(
+                f"Error verifying token signature: {e}\n{traceback.format_exc()}"
+            )
             raise InvalidTokenError()
 
     def _generate_cypher(self, iv: bytes) -> Cipher:
         return Cipher(
             algorithm=algorithms.AES256(self._encrypt_key),
             mode=modes.GCM(iv),
-            backend=default_backend()
+            backend=default_backend(),
         )

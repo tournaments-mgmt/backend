@@ -6,17 +6,9 @@
     "version": "18.0.0.1.1",
     "license": "GPL-3",
     "sequence": 0,
-    "depends": [
-        "base",
-        "base_setup",
-        "mail",
-        "web",
-        "pegi",
-        "maxmind_geoip2"
-    ],
+    "depends": ["base", "base_setup", "mail", "web", "pegi", "maxmind_geoip2"],
     "data": [
         "data/ir_module_category.xml",
-
         "security/profiles.xml",
         "security/models/badword.xml",
         "security/models/entrant.xml",
@@ -26,7 +18,6 @@
         "security/models/platform.xml",
         "security/models/token.xml",
         "security/models/tournament.xml",
-
         "views/badword.xml",
         "views/entrant.xml",
         "views/game.xml",
@@ -35,7 +26,6 @@
         "views/platform.xml",
         "views/token.xml",
         "views/tournament.xml",
-
         "actions/badword.xml",
         "actions/entrant.xml",
         "actions/game.xml",
@@ -44,8 +34,7 @@
         "actions/platform.xml",
         "actions/token.xml",
         "actions/tournament.xml",
-
-        "menu/items.xml"
+        "menu/items.xml",
     ],
     "application": True,
     "installable": True,

@@ -7,13 +7,13 @@ from odoo import models, fields, api
 SELECTION_DAY_OF_WEEK = [
     ("saturday", "Saturday"),
     ("sunday", "Sunday"),
-    ("other", "Other")
+    ("other", "Other"),
 ]
 
 SELECTION_TYPE = [
     ("contest", "Contest"),
     ("bracket", "Brackets"),
-    ("roundrobin", "Round-Robin")
+    ("roundrobin", "Round-Robin"),
 ]
 
 
@@ -23,14 +23,18 @@ class Tournament(models.Model):
     _order = "scheduled_start"
 
     _sql_constraints = [
-        ("name_uniq", "UNIQUE(name)", "A Tournament with the same name already exists. Names must be uniques.")
+        (
+            "name_uniq",
+            "UNIQUE(name)",
+            "A Tournament with the same name already exists. Names must be uniques.",
+        )
     ]
 
     _inherit = [
         "tournaments.scheduled",
         "tournaments.extid",
         "mail.thread",
-        "mail.activity.mixin"
+        "mail.activity.mixin",
     ]
 
     name = fields.Char(
@@ -44,14 +48,14 @@ class Tournament(models.Model):
         help="Type of tournament",
         selection=SELECTION_TYPE,
         required=True,
-        default="contest"
+        default="contest",
     )
 
     parent_id = fields.Many2one(
         string="Parent",
         help="Parent tournament",
         comodel_name="tournaments.tournament",
-        tracking=True
+        tracking=True,
     )
 
     game_id = fields.Many2one(
@@ -62,14 +66,10 @@ class Tournament(models.Model):
         tracking=True,
     )
 
-    game_logo_image = fields.Image(
-        string="Game Logo",
-        related="game_id.logo_image"
-    )
+    game_logo_image = fields.Image(string="Game Logo", related="game_id.logo_image")
 
     game_pegi_age_logo = fields.Image(
-        string="Game Tournament PEGI Age Label",
-        related="game_id.pegi_age_id.logo"
+        string="Game Tournament PEGI Age Label", related="game_id.pegi_age_id.logo"
     )
 
     platform_id = fields.Many2one(
@@ -81,8 +81,7 @@ class Tournament(models.Model):
     )
 
     platform_logo_image = fields.Image(
-        string="Platform Logo",
-        related="platform_id.logo_image"
+        string="Platform Logo", related="platform_id.logo_image"
     )
 
     day_of_week = fields.Selection(
@@ -94,9 +93,7 @@ class Tournament(models.Model):
     )
 
     kanban_color = fields.Integer(
-        string="Kanban color",
-        help="Kanban color",
-        compute="_compute_kanban_color"
+        string="Kanban color", help="Kanban color", compute="_compute_kanban_color"
     )
 
     entrant_ids = fields.One2many(
@@ -122,9 +119,7 @@ class Tournament(models.Model):
     )
 
     match_count = fields.Integer(
-        string="Matches count",
-        help="Matches count",
-        compute="_compute_match_count"
+        string="Matches count", help="Matches count", compute="_compute_match_count"
     )
 
     @api.depends("entrant_ids")
@@ -135,11 +130,11 @@ class Tournament(models.Model):
     @api.depends("scheduled_start")
     def _compute_day_of_week(self):
         for rec in self:
-            isoweekday: int = rec \
-                .scheduled_start \
-                .replace(tzinfo=pytz.UTC) \
-                .astimezone(pytz.timezone("Europe/Rome")) \
+            isoweekday: int = (
+                rec.scheduled_start.replace(tzinfo=pytz.UTC)
+                .astimezone(pytz.timezone("Europe/Rome"))
                 .isoweekday()
+            )
 
             if isoweekday == 6:
                 rec.day_of_week = "saturday"
@@ -168,7 +163,9 @@ class Tournament(models.Model):
     def display_entrants(self):
         self.ensure_one()
 
-        action = self.env["ir.actions.actions"]._for_xml_id("tournaments.action_entrant_list")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "tournaments.action_entrant_list"
+        )
         action["domain"] = [("tournament_id", "=", self.id)]
         context = json.loads(action["context"])
         context.update({"default_tournament_id": self.id})
@@ -178,7 +175,9 @@ class Tournament(models.Model):
     def display_matches(self):
         self.ensure_one()
 
-        action = self.env["ir.actions.actions"]._for_xml_id("tournaments.action_match_list")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "tournaments.action_match_list"
+        )
         action["domain"] = [("tournament_id", "=", self.id)]
         context = json.loads(action["context"])
         context.update({"default_tournament_id": self.id})
@@ -196,14 +195,18 @@ class Tournament(models.Model):
 
             if "running" in matches_states:
                 start_list = [x.real_start for x in rec.match_ids if x.real_start]
-                rec.write({
-                    "scheduled_state": "running",
-                    "real_start": start_list and min(start_list) or None
-                })
+                rec.write(
+                    {
+                        "scheduled_state": "running",
+                        "real_start": start_list and min(start_list) or None,
+                    }
+                )
 
             elif matches_states.issubset({"done", "canceled"}):
                 end_list = [x.real_end for x in rec.match_ids if x.real_end]
-                rec.write({
-                    "scheduled_state": "done",
-                    "real_end": end_list and max(end_list) or None
-                })
+                rec.write(
+                    {
+                        "scheduled_state": "done",
+                        "real_end": end_list and max(end_list) or None,
+                    }
+                )

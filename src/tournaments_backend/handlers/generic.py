@@ -21,5 +21,5 @@ def register(app):
         _logger.error(f"{exc}\n{traceback.format_exc()}")
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
-            content={"message": f"Invalid field"}
+            content={"message": f"Invalid field"},
         )

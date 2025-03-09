@@ -6,20 +6,16 @@
     "sequence": 0,
     "author": "",
     "license": "GPL-3",
-    "depends": [
-    ],
+    "depends": [],
     "data": [
         "data/pegi_age.xml",
         "data/pegi_content.xml",
-
         "security/models/age.xml",
         "security/models/content.xml",
-
         "views/age.xml",
         "views/content.xml",
-
         "actions/age.xml",
         "actions/content.xml",
     ],
-    "application": False
+    "application": False,
 }

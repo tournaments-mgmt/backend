@@ -9,7 +9,6 @@
     "depends": [
         "tournaments",
     ],
-    "data": [
-    ],
-    "application": True
+    "data": [],
+    "application": True,
 }

@@ -16,7 +16,6 @@ from odoo.api import Environment
 from tournaments_backend import persistence, instance
 from tournaments_backend.config import config
 from tournaments_backend.persistence.odoo_environment import OdooEnv
-from tournaments_backend.services.webtoken import WebTokenService
 
 _logger = logging.getLogger(__name__)
 
@@ -47,7 +46,7 @@ def odoo_config():
         port=config.DB_PORT,
         user=config.DB_USERNAME,
         password=config.DB_PASSWORD,
-        dbname="postgres"
+        dbname="postgres",
     )
     sql_conn.autocommit = True
     sql_conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -80,11 +79,9 @@ async def sync_client(odoo_config, odoo_env) -> typing.AsyncGenerator[TestClient
 @pytest.fixture
 async def generate_user_testuser1(odoo_env):
     res_users_obj = odoo_env["res.users"]
-    res_users = res_users_obj.create({
-        "name": "testuser1",
-        "login": "iamatestuser1",
-        "password": "iamatestpassword"
-    })
+    res_users = res_users_obj.create(
+        {"name": "testuser1", "login": "iamatestuser1", "password": "iamatestpassword"}
+    )
     if not res_users:
         raise ValueError("Unable to create test user")
     odoo_env.cr.commit()
@@ -94,23 +91,13 @@ async def generate_user_testuser1(odoo_env):
 @pytest.fixture
 async def generate_user_testuser2(odoo_env):
     res_users_obj = odoo_env["res.users"]
-    res_users = res_users_obj.create({
-        "name": "testuser2",
-        "login": "iamatestuser2",
-        "password": "iamatestpassword"
-    })
+    res_users = res_users_obj.create(
+        {"name": "testuser2", "login": "iamatestuser2", "password": "iamatestpassword"}
+    )
     if not res_users:
         raise ValueError("Unable to create test user")
     odoo_env.cr.commit()
     yield res_users
-
-
-@pytest.fixture
-async def webtoken_service():
-    yield WebTokenService(
-        sign_key="-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBgL/kfqHKHq9nkUYtfmj7lFQ+OUb+ymd4VbzYUse4Ef\n-----END PRIVATE KEY-----\n",
-        encrypt_key="SXkFiTqwekNLvITKukrZ4sp3psTjpVkDyelHBOeSF2M="
-    )
 
 
 async def database_backup() -> BytesIO:
@@ -123,15 +110,15 @@ async def database_backup() -> BytesIO:
         f"--username={config.DB_USERNAME}",
         "--no-password",
         f"--dbname={config.DB_NAME}",
-        "--format=c"
+        "--format=c",
     ]
 
-    env: dict = {
-        "PGPASSWORD": config.DB_PASSWORD
-    }
+    env: dict = {"PGPASSWORD": config.DB_PASSWORD}
 
     _logger.debug(f"Running command: {' '.join(cmd)}")
-    proc = await asyncio.create_subprocess_exec(*cmd, stdout=asyncio.subprocess.PIPE, env=env)
+    proc = await asyncio.create_subprocess_exec(
+        *cmd, stdout=asyncio.subprocess.PIPE, env=env
+    )
 
     buffer = io.BytesIO()
 
@@ -165,12 +152,12 @@ async def database_restore(buffer: io.BytesIO) -> None:
         "--no-owner",
     ]
 
-    env: dict = {
-        "PGPASSWORD": config.DB_PASSWORD
-    }
+    env: dict = {"PGPASSWORD": config.DB_PASSWORD}
 
     _logger.debug(f"Running command: {' '.join(cmd)}")
-    proc = await asyncio.create_subprocess_exec(*cmd, stdin=asyncio.subprocess.PIPE, env=env)
+    proc = await asyncio.create_subprocess_exec(
+        *cmd, stdin=asyncio.subprocess.PIPE, env=env
+    )
 
     _logger.debug(f"Writing dump buffer to restore command")
     while chunk := buffer.read(1024):
