@@ -10,9 +10,32 @@ Build the development container with this command
 docker image build --target=dev --tag=tournaments-mgmt-backend:dev .
 ```
 
-### Environment vars
+### Odoo start
 
 ```bash
-JWT_SIGN_KEY="-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBgL/kfqHKHq9nkUYtfmj7lFQ+OUb+ymd4VbzYUse4Ef\n-----END PRIVATE KEY-----\n"
-JWT_ENCRYPT_KEY="SXkFiTqwekNLvITKukrZ4sp3psTjpVkDyelHBOeSF2M="
+python3 \
+    odoo/odoo-bin \
+        --config=/data/odoorc.conf \
+        --workers=0 \
+        --http-port=8069 \
+        --limit-time-cpu=9999999 \
+        --limit-time-real=9999999 \
+        --log-handler=odoo.addons.tournaments:DEBUG \
+        --log-handler=odoo.addons.maxmind_geoip2:DEBUG \
+        --addons-path=odoo/odoo/addons,odoo/addons,addons \
+        --data-dir=/data \
+        --db_host=172.17.0.1 \
+        --db_port=5432 \
+        --db_user=tournaments \
+        --db_password=tournaments
+```
+
+### Container start arguments fopr PyCharm
+
+```
+-v /home/user/data/tournaments:/data \
+-v /opt/geolite2:/opt/geolite2:ro \
+-p 0.0.0.0:8069:8069 \
+-p 0.0.0.0:8072:8072 \
+--rm
 ```

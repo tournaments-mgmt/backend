@@ -278,19 +278,19 @@
                                 <div class="d-flex flex-column align-items-start">
                                     <field name="game_pegi_age_logo"
                                            widget="image"
-                                           height="64" width="57"
+                                           size="small"
                                            alt="PEGI"/>
                                 </div>
                                 <div class="d-flex flex-column justify-content-end">
                                     <div class="d-flex justify-content-between">
                                         <field name="game_logo_image"
                                                widget="image"
-                                               height="64" width="64"
+                                               size="small"
                                                alt="Game"/>
                                         <field name="platform_logo_image"
                                                widget="image"
                                                class="ms-1"
-                                               height="64" width="64"
+                                               size="small"
                                                alt="Platform"/>
                                     </div>
                                 </div>

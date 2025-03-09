@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class BadWord(models.Model):
@@ -11,3 +12,9 @@ class BadWord(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     word = fields.Char(string="Word", help="Word", readonly=False, tracking=True)
+
+    @api.model
+    def validate_name(self, name) -> None:
+        for badword in self.search([]):
+            if badword.word.lower() in name.lower():
+                raise ValidationError("Name invalid")

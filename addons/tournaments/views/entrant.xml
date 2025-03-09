@@ -40,9 +40,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="nickname_id"/>
+                                        <label for="player_id"/>
                                         <h2>
-                                            <field name="nickname_id"/>
+                                            <field name="player_id"/>
                                         </h2>
                                     </div>
                                     <div class="col">

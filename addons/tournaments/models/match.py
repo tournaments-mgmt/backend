@@ -112,16 +112,6 @@ class Match(models.Model):
 
         return ret
 
-    # def write(self, vals):
-    #     ret = super().write(vals)
-    #     for rec in self:
-    #         if rec.tournament_type_id.id != self.env.ref("tournaments.data_tournaments_tournament_type_bracket").id:
-    #             continue
-    #         if "state" not in vals or vals["state"] != "done":
-    #             continue
-    #         rec.bracket_forward_winners()
-    #     return ret
-
     def unlink(self):
         tournament_obj = self.env["tournaments.tournament"]
 
@@ -129,11 +119,6 @@ class Match(models.Model):
         ret = super().unlink()
         tournament_obj.browse(tournament_ids).update_state()
         return ret
-
-    # @api.depends("match_entrant_ids")
-    # def _compute_match_entrant_count(self):
-    #     for rec in self:
-    #         rec.match_entrant_count = len(rec.match_entrant_ids)
 
     @api.depends("tournament_id", "entrant_id_a", "entrant_id_b")
     def _compute_name(self):

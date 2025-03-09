@@ -65,39 +65,39 @@ async def odoo_env_superuser() -> AsyncGenerator[Environment, None]:
         yield odoo_env
 
 
-async def odoo_env_web_token(
-    request: Request = None, websocket: WebSocket = None
-) -> AsyncGenerator[Environment, None]:
-    if request is not None:
-        authorization_header: str | None = request.headers.get("Authorization", None)
-        if not authorization_header:
-            raise AuthorizationError()
-
-    elif websocket is not None:
-        authorization_header: str | None = websocket.headers.get("Authorization", None)
-        if not authorization_header:
-            raise AuthorizationError()
-
-    else:
-        raise ValueError("Unable to generate Odoo Env")
-
-    header_items = authorization_header.split(" ")
-    if len(header_items) != 2:
-        raise AuthorizationError()
-
-    encrypted_data: str = header_items[1]
-
-    webtoken_service: WebTokenService = request.app.state.webtoken_service
-    data: dict = await webtoken_service.decrypt(encrypted_data=encrypted_data)
-
-    if "user_id" not in data:
-        raise AuthorizationError()
-
-    user_id: int = data.get("user_id")
-    context: dict = data.get("context", dict())
-
-    with OdooEnv(user_id=user_id, context=context) as odoo_env:
-        yield odoo_env
+# async def odoo_env_web_token(
+#     request: Request = None, websocket: WebSocket = None
+# ) -> AsyncGenerator[Environment, None]:
+#     if request is not None:
+#         authorization_header: str | None = request.headers.get("Authorization", None)
+#         if not authorization_header:
+#             raise AuthorizationError()
+#
+#     elif websocket is not None:
+#         authorization_header: str | None = websocket.headers.get("Authorization", None)
+#         if not authorization_header:
+#             raise AuthorizationError()
+#
+#     else:
+#         raise ValueError("Unable to generate Odoo Env")
+#
+#     header_items = authorization_header.split(" ")
+#     if len(header_items) != 2:
+#         raise AuthorizationError()
+#
+#     encrypted_data: str = header_items[1]
+#
+#     webtoken_service: WebTokenService = request.app.state.webtoken_service
+#     data: dict = await webtoken_service.decrypt(encrypted_data=encrypted_data)
+#
+#     if "user_id" not in data:
+#         raise AuthorizationError()
+#
+#     user_id: int = data.get("user_id")
+#     context: dict = data.get("context", dict())
+#
+#     with OdooEnv(user_id=user_id, context=context) as odoo_env:
+#         yield odoo_env
 
 
 async def odoo_env_token(

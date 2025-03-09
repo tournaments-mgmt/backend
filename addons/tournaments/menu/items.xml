@@ -19,10 +19,10 @@
                   action="action_entrant_list"
                   sequence="0"/>
 
-        <menuitem id="menu_nicknames_list"
-                  name="Nicknames"
+        <menuitem id="menu_players_list"
+                  name="Players"
                   parent="menu_entrants"
-                  action="action_nickname_list"
+                  action="action_player_list"
                   sequence="0"/>
 
     <!--    <menuitem id="menu_entrants_search_qr"-->

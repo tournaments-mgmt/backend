@@ -1,6 +1,6 @@
 import typing
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class Entrant(models.Model):
@@ -9,7 +9,7 @@ class Entrant(models.Model):
 
     _inherit = ["tournaments.extid", "mail.thread", "mail.activity.mixin"]
 
-    name = fields.Char(string="Name", related="nickname_id.nickname", store=True)
+    name = fields.Char(string="Name", related="player_id.name", store=True)
 
     tournament_id = fields.Many2one(
         string="Tournament",
@@ -19,17 +19,17 @@ class Entrant(models.Model):
         tracking=True,
     )
 
-    nickname_id = fields.Many2one(
-        string="Nickname",
-        help="The nickname of the entrant",
-        comodel_name="tournaments.nickname",
+    player_id = fields.Many2one(
+        string="Player",
+        help="The player of the entrant",
+        comodel_name="tournaments.player",
         domain="[]",
         required=True,
         tracking=True,
     )
 
     user_id = fields.Many2one(
-        related="nickname_id.user_id", readonly=True, store=True, tracking=True
+        related="player_id.user_id", readonly=True, store=True, tracking=True
     )
 
     confirmed = fields.Boolean(
@@ -46,24 +46,7 @@ class Entrant(models.Model):
         tracking=True,
     )
 
-    @api.onchange("user_id")
-    def _onchange_user_id(self):
-        for rec in self:
-            rec.name = rec.user_id.nickname
-
-    @api.model_create_multi
-    def create(self, vals_list) -> typing.Self:
-        for vals in vals_list:
-            if not vals.get("name", None):
-                vals["name"] = self.env["res.users"].browse(vals["user_id"]).nickname
-
-        return super().create(vals_list)
-
     def write(self, vals) -> typing.Literal[True]:
-        for rec in self:
-            if not rec.name and ("name" not in vals or not vals["name"]):
-                vals["name"] = rec.user_id.nickname
-
         if "confirmed" in vals:
             vals["ts_confirmed"] = vals["confirmed"] and fields.Datetime.now() or False
 

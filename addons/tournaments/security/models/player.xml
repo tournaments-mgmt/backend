@@ -2,9 +2,9 @@
 
 <odoo noupdate="0">
 
-    <record id="access_tournaments_nickname_showcase" model="ir.model.access">
-        <field name="name">tournaments.nickname: Showcase</field>
-        <field name="model_id" ref="model_tournaments_nickname"/>
+    <record id="access_tournaments_player_showcase" model="ir.model.access">
+        <field name="name">tournaments.player: Showcase</field>
+        <field name="model_id" ref="model_tournaments_player"/>
         <field name="group_id" ref="group_profile_showcase"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -12,9 +12,9 @@
         <field name="perm_unlink" eval="False"/>
     </record>
 
-    <record id="access_tournaments_nickname_entrant" model="ir.model.access">
-        <field name="name">tournaments.nickname: Entrant</field>
-        <field name="model_id" ref="model_tournaments_nickname"/>
+    <record id="access_tournaments_player_entrant" model="ir.model.access">
+        <field name="name">tournaments.player: Entrant</field>
+        <field name="model_id" ref="model_tournaments_player"/>
         <field name="group_id" ref="group_profile_entrant"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -22,9 +22,9 @@
         <field name="perm_unlink" eval="False"/>
     </record>
 
-    <record id="access_tournaments_nickname_user" model="ir.model.access">
-        <field name="name">tournaments.nickname: User</field>
-        <field name="model_id" ref="model_tournaments_nickname"/>
+    <record id="access_tournaments_player_user" model="ir.model.access">
+        <field name="name">tournaments.player: User</field>
+        <field name="model_id" ref="model_tournaments_player"/>
         <field name="group_id" ref="group_profile_user"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
