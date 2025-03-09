@@ -119,7 +119,7 @@ async def odoo_env_token(request: Request = None, websocket: WebSocket = None) -
     with OdooEnv() as env:
         token_obj = env["tournaments.token"]
         token = token_obj.search([("value", "=", token_value)], limit=1)
-        if not token:
+        if not token or token.expired:
             raise AuthorizationError()
         user_id: int = token.res_users_id.id
 
