@@ -99,6 +99,21 @@ class Tournament(models.Model):
         compute="_compute_kanban_color"
     )
 
+    entrant_ids = fields.One2many(
+        string="Entrants",
+        help="Entrants",
+        comodel_name="tournaments.entrant",
+        inverse_name="tournament_id",
+        readonly=True,
+    )
+
+    entrant_count = fields.Integer(
+        string="Entrant count",
+        help="Entrant count",
+        compute="_compute_entrant_count",
+        readonly=True,
+    )
+
     match_ids = fields.One2many(
         string="Matches",
         help="Matches",
@@ -112,23 +127,26 @@ class Tournament(models.Model):
         compute="_compute_match_count"
     )
 
+    @api.depends("entrant_ids")
+    def _compute_entrant_count(self):
+        for rec in self:
+            rec.entrant_count = len(rec.entrant_ids)
+
     @api.depends("scheduled_start")
     def _compute_day_of_week(self):
         for rec in self:
-            isoweekday: int = (rec
-                               .scheduled_start
-                               .replace(tzinfo=pytz.UTC)
-                               .astimezone(pytz.timezone("Europe/Rome"))
-                               .isoweekday())
+            isoweekday: int = rec \
+                .scheduled_start \
+                .replace(tzinfo=pytz.UTC) \
+                .astimezone(pytz.timezone("Europe/Rome")) \
+                .isoweekday()
 
-        day_of_week: str = "other"
-
-        if isoweekday == 6:
-            day_of_week = "saturday"
-        elif isoweekday == 7:
-            day_of_week = "sunday"
-
-        rec.day_of_week = day_of_week
+            if isoweekday == 6:
+                rec.day_of_week = "saturday"
+            elif isoweekday == 7:
+                rec.day_of_week = "sunday"
+            else:
+                rec.day_of_week = "other"
 
     @api.depends("day_of_week")
     def _compute_kanban_color(self):
@@ -146,6 +164,16 @@ class Tournament(models.Model):
     def _compute_match_count(self):
         for rec in self:
             rec.match_count = len(rec.match_ids)
+
+    def display_entrants(self):
+        self.ensure_one()
+
+        action = self.env["ir.actions.actions"]._for_xml_id("tournaments.action_entrant_list")
+        action["domain"] = [("tournament_id", "=", self.id)]
+        context = json.loads(action["context"])
+        context.update({"default_tournament_id": self.id})
+        action["context"] = json.dumps(context)
+        return action
 
     def display_matches(self):
         self.ensure_one()

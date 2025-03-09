@@ -17,6 +17,7 @@
                 <field name="scheduled_end"/>
                 <field name="scheduled_state"/>
                 <field name="type"/>
+                <field name="entrant_count"/>
                 <field name="extid"/>
                 <button type="object"
                         name="action_start"
@@ -101,12 +102,12 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <!--                        <button type="object"-->
-                        <!--                                name="display_entrants"-->
-                        <!--                                class="oe_stat_button"-->
-                        <!--                                icon="fa-user">-->
-                        <!--                            <field name="entrant_count" widget="statinfo" string="Entrants"/>-->
-                        <!--                        </button>-->
+                        <button type="object"
+                                name="display_entrants"
+                                class="oe_stat_button"
+                                icon="fa-user">
+                            <field name="entrant_count" widget="statinfo" string="Entrants"/>
+                        </button>
                         <button type="object"
                                 name="display_matches"
                                 class="oe_stat_button"
