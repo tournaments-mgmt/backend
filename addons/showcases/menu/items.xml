@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <menuitem id="menu_root"
+              name="Showcases"
+              web_icon="showcases,static/description/icon.png"
+              groups="group_profile_user"
+              sequence="0"/>
+
+    <menuitem id="menu_showcasespanes"
+              name="Showcases &amp; Panes"
+              parent="menu_root"
+              sequence="0"/>
+
+    <menuitem id="menu_showcasespanes_showcases"
+              name="Showcases"
+              parent="menu_showcasespanes"
+              action="action_showcase_list"
+              sequence="0"/>
+
+    <menuitem id="menu_showcasespanes_panes"
+              name="Panes"
+              parent="menu_showcasespanes"
+              action="action_pane_list"
+              sequence="1"/>
+
+    <menuitem id="menu_utilities"
+              name="Utilities"
+              parent="menu_root"
+              sequence="90"/>
+
+    <menuitem id="menu_registry"
+              name="Registry"
+              parent="menu_root"
+              sequence="100"/>
+
+    <menuitem id="menu_registry_panetypes"
+              name="Pane types"
+              parent="menu_registry"
+              action="action_pane_type_list"
+              sequence="0"/>
+
+</odoo>

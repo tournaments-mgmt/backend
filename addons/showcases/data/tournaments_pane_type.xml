@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="data_tournaments_pane_type_text" model="tournaments.pane.type">
+        <field name="name">Fixed text</field>
+        <field name="tag">text</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_image" model="tournaments.pane.type">
+        <field name="name">Fixed image</field>
+        <field name="tag">image</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_video" model="tournaments.pane.type">
+        <field name="name">Video</field>
+        <field name="tag">video</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournaments_all" model="tournaments.pane.type">
+        <field name="name">List of all Tournaments</field>
+        <field name="tag">tournaments_all</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournaments_today" model="tournaments.pane.type">
+        <field name="name">List of all today Tournaments</field>
+        <field name="tag">tournaments_today</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournaments_running" model="tournaments.pane.type">
+        <field name="name">List of all running Tournaments</field>
+        <field name="tag">tournaments_running</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournaments_scheduled" model="tournaments.pane.type">
+        <field name="name">List of all next scheduled Tournaments</field>
+        <field name="tag">tournaments_scheduled</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_matches" model="tournaments.pane.type">
+        <field name="name">List of all matches in a Tournament</field>
+        <field name="tag">tournament_matches</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_score" model="tournaments.pane.type">
+        <field name="name">List score in a Tournament</field>
+        <field name="tag">tournament_score</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_best_of_matches" model="tournaments.pane.type">
+        <field name="name">Best Of Matches in a Tournament</field>
+        <field name="tag">tournament_best_of_matches</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_brackets" model="tournaments.pane.type">
+        <field name="name">Tournament Bracket</field>
+        <field name="tag">tournament_brackets</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_single_matches" model="tournaments.pane.type">
+        <field name="name">Tournament Single Matches</field>
+        <field name="tag">tournament_single_matches</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_groups_matches" model="tournaments.pane.type">
+        <field name="name">Tournament Groups Matches</field>
+        <field name="tag">tournament_groups_matches</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_groups" model="tournaments.pane.type">
+        <field name="name">Tournament Groups</field>
+        <field name="tag">tournament_groups</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_classification" model="tournaments.pane.type">
+        <field name="name">Tournament Classification</field>
+        <field name="tag">tournament_classification</field>
+    </record>
+
+    <record id="data_tournaments_pane_type_tournament_entrants_list" model="tournaments.pane.type">
+        <field name="name">Tournament Entrants List</field>
+        <field name="tag">tournament_entrants_list</field>
+    </record>
+</odoo>

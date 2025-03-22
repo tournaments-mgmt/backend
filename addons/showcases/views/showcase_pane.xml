@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_showcase_pane_list_showcase" model="ir.ui.view">
+        <field name="name">tournaments.showcase.pane: List view for Showcase</field>
+        <field name="model">tournaments.showcase.pane</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" decoration-success="is_next == True">
+                <field name="order" widget="handle"/>
+                <field name="pane_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                <field name="override_duration" widget="boolean_toggle"/>
+                <field name="duration" widget="integer" options="{'format': 0}"
+                       readonly="[('override_duration', '=', False)]"
+                       required="[('override_duration', '=', True)]"
+                />
+                <button type="object"
+                        name="action_set_as_next"
+                        icon="fa-step-forward"
+                        title="Set Next"
+                        class="btn-primary"
+                        invisible="[('is_next', '!=', False)]"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_showcase_pane_list_pane" model="ir.ui.view">
+        <field name="name">tournaments.showcase.pane: List view for Pane</field>
+        <field name="model">tournaments.showcase.pane</field>
+        <field name="arch" type="xml">
+            <list decoration-success="is_next == True">
+                <field name="showcase_id"/>
+                <field name="override_duration" widget="boolean_toggle"/>
+                <field name="duration" widget="integer" options="{'format': 0}"/>
+                <button type="object"
+                        name="action_set_as_next"
+                        icon="fa-step-forward"
+                        title="Set Next"
+                        class="btn-primary"
+                        invisible="[('is_next', '!=', False)]"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

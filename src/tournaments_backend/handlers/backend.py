@@ -1,11 +1,11 @@
 from starlette import status
 from starlette.responses import JSONResponse
 
-from tournaments_backend.errors.backend import (
-    BackendError,
+from tournaments_backend.errors.backend import BackendError
+from tournaments_backend.errors.services import (
     AuthenticationError,
-    AuthorizationError,
     InvalidTokenError,
+    AuthorizationError,
 )
 
 

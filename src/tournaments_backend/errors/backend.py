@@ -6,19 +6,3 @@ class BackendError(RuntimeError):
 
     def __str__(self):
         return self._message
-
-
-class ServiceError(BackendError):
-    pass
-
-
-class InvalidTokenError(ServiceError):
-    pass
-
-
-class AuthenticationError(ServiceError):
-    pass
-
-
-class AuthorizationError(ServiceError):
-    pass

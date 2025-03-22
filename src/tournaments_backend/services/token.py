@@ -1,5 +1,5 @@
 from odoo.api import Environment
-from tournaments_backend.errors.backend import ServiceError
+from tournaments_backend.errors.services import ServiceError
 
 
 class TokenService:

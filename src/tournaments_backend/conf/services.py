@@ -5,6 +5,8 @@ from fastapi import FastAPI
 
 from tournaments_backend.config import config
 from tournaments_backend.services.authentication import AuthenticationService
+from tournaments_backend.services.pane import PaneService
+from tournaments_backend.services.showcase import ShowcaseService
 from tournaments_backend.services.token import TokenService
 from tournaments_backend.services.webtoken import WebTokenService
 
@@ -26,5 +28,11 @@ async def generate_services(instance: FastAPI):
 
     _logger.debug("Generating TokenService")
     instance.state.token_service = TokenService()
+
+    _logger.debug("Generating TokenService")
+    instance.state.showcase_service = ShowcaseService()
+
+    _logger.debug("Generating PaneService")
+    instance.state.pane_service = PaneService()
 
     yield

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_pane_type_list" model="ir.ui.view">
+        <field name="name">tournaments.pane.type: List view</field>
+        <field name="model">tournaments.pane.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="tag"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pane_type_form" model="ir.ui.view">
+        <field name="name">tournaments.pane.type: Form view</field>
+        <field name="model">tournaments.pane.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <label for="tag"/>
+                    <h2>
+                        <field name="tag"/>
+                    </h2>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_pane_type_search" model="ir.ui.view">
+        <field name="name">tournaments.pane.type: Search view</field>
+        <field name="model">tournaments.pane.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="tag"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="action_pane_type_list" model="ir.actions.act_window">
+        <field name="name">Pane Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tournaments.pane.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

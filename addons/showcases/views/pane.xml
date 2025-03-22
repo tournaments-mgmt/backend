@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="view_pane_list" model="ir.ui.view">
+        <field name="name">tournaments.pane: List view</field>
+        <field name="model">tournaments.pane</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="duration" widget="integer" options="{'format': 0}"/>
+                <field name="type_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pane_form" model="ir.ui.view">
+        <field name="name">tournaments.pane: Form view</field>
+        <field name="model">tournaments.pane</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group string="Configuration" col="4">
+                        <field name="type_id"/>
+                        <field name="duration" widget="integer" options="{'format': 0}"/>
+                    </group>
+                    <group name="group_text"
+                           string="Text"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_text)d)]">
+                        <field name="text_title"
+                               required="[('type_id', '=', %(showcases.data_tournaments_pane_type_text)d)]"/>
+                        <field name="text_subtitle"
+                               required="[('type_id', '=', %(showcases.data_tournaments_pane_type_text)d)]"/>
+                        <field name="text_message"/>
+
+                        <field name="text_background_file"
+                               widget="image"
+                               style="width: 192px;"
+                               required="[('type_id', '=', %(showcases.data_tournaments_pane_type_text)d)]"/>
+                    </group>
+                    <group name="group_image"
+                           string="Image"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_image)d)]">
+                        <field name="image_file_name" invisible="1"/>
+                        <field name="image_file"
+                               widget="image"
+                               style="width: 192px;"
+                               filename="image_file_name"
+                               required="[('type_id', '=', %(showcases.data_tournaments_pane_type_image)d)]"/>
+                    </group>
+                    <group name="group_video"
+                           string="Video"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_video)d)]">
+                        <field name="video_url" widget="url"/>
+                    </group>
+                    <group name="group_tournaments_all"
+                           string="All Tournaments"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_tournaments_all)d)]">
+                        <strong>No settings</strong>
+                    </group>
+                    <group name="group_tournaments_today"
+                           string="Today Tournaments"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_tournaments_today)d)]">
+                        <strong>No settings</strong>
+                    </group>
+                    <group name="group_tournaments_running"
+                           string="Running Tournaments"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_tournaments_running)d)]"
+                           col="4">
+                        <field name="tournaments_running_show_completed"/>
+                        <field name="tournaments_running_show_next"
+                               required="[('tournaments_running_show_completed', '=', True)]"/>
+                        <field name="tournaments_running_show_completed_timeout"/>
+                        <field name="tournaments_running_show_next_interval"
+                               required="[('tournaments_running_show_next', '=', True)]"/>
+                    </group>
+                    <group name="group_tournaments_scheduled"
+                           string="Next Scheduled Tournaments"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_tournaments_scheduled)d)]">
+                        <strong>No settings</strong>
+                    </group>
+                    <group name="group_tournament_matches"
+                           string="Tournaments Matches">
+                        <field name="tournament_matches_tournament_id"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group name="group_classification"
+                           string="Classification and Bast Of Matches"
+                           invisible="[
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_classification)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_best_of_matches)d)
+                           ]">
+                        <field name="tournament_classification_scores_titles"
+                               required="[('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_classification)d)]"/>
+                    </group>
+                    <group name="group_presentation"
+                           string="Presentation"
+                           invisible="[
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_best_of_matches)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_single_matches)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_classification)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_entrants_list)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_brackets)d)
+                           ]">
+                        <field name="tournament_classification_items_per_column"
+                               required="[
+                               '|',
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_classification)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_single_matches)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_entrants_list)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_best_of_matches)d)
+                               ]"
+                               invisible="[
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_brackets)d)
+                               ]"/>
+                        <field name="tournament_classification_column_per_view"
+                               required="[
+                               '|',
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_classification)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_single_matches)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_entrants_list)d),
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_best_of_matches)d)
+                               ]"
+                               invisible="[
+                               ('type_id', '=', %(showcases.data_tournaments_pane_type_tournament_brackets)d)
+                               ]"/>
+                        <field name="tournament_matches_show_scheduled_time"/>
+                    </group>
+                    <group name="group_best_of_matches"
+                           string="Best Of Matches"
+                           invisible="[
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_best_of_matches)d),
+                           ('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_single_matches)d)
+                           ]">
+                        <field name="tournament_best_of_matches_round"/>
+                    </group>
+                    <group name="group_brackets"
+                           string="Brackets"
+                           invisible="[('type_id', '!=', %(showcases.data_tournaments_pane_type_tournament_brackets)d)]">
+                        <field name="tournament_brackets_round"/>
+                    </group>
+                    <notebook>
+                        <page name="page_showcases" string="Showcases">
+                            <field name="showcase_pane_ids"
+                                   options="{'no_create': True, 'no_create_edit': True}"
+                                   context="{'list_view_ref': 'showcases.view_showcase_pane_list_pane'}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pane_search" model="ir.ui.view">
+        <field name="name">tournaments.pane: Search view</field>
+        <field name="model">tournaments.pane</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="type_id"/>
+                <field name="duration"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

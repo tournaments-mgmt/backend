@@ -5,6 +5,7 @@ import shutil
 import typing
 from io import BytesIO
 from typing import Generator
+from unittest.mock import AsyncMock
 
 import psycopg2
 import pytest
@@ -12,6 +13,7 @@ from fastapi import FastAPI
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from starlette.testclient import TestClient
 
+import tournaments_backend
 from odoo.api import Environment
 from tournaments_backend import persistence, instance
 from tournaments_backend.config import config
@@ -74,6 +76,16 @@ async def sync_client(odoo_config, odoo_env) -> typing.AsyncGenerator[TestClient
         yield client
 
     await database_restore(db_backup_buffer)
+
+
+@pytest.fixture
+def disable_showcase_worker_task():
+    original = tournaments_backend.workers.showcase.ShowcaseWorker._pane_loop
+    tournaments_backend.workers.showcase.ShowcaseWorker._pane_loop = AsyncMock(
+        return_value=None
+    )
+    yield
+    tournaments_backend.workers.showcase.ShowcaseWorker._pane_loop = original
 
 
 @pytest.fixture

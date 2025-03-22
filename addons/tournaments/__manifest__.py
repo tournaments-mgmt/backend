@@ -3,7 +3,7 @@
     "summary": "Tournaments",
     "description": "Tournaments",
     "category": "Tournaments",
-    "version": "18.0.0.1.1",
+    "version": "18.0.0.3.0",
     "license": "GPL-3",
     "sequence": 0,
     "depends": ["base", "base_setup", "mail", "web", "pegi", "maxmind_geoip2"],

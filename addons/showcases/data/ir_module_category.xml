@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo noupdate="0">
+
+    <record id="category_showcases" model="ir.module.category">
+        <field name="name">Showcases</field>
+        <field name="description">Showcases management</field>
+        <field name="parent_id" ref="tournaments.category_root"/>
+        <field name="sequence">1</field>
+    </record>
+
+</odoo>

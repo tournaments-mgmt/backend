@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "tournaments-backend"
-version = "0.1.1"
+version = "0.3.0"
 description = "Tournaments Backend"
 readme = "README.md"
 authors = [
@@ -71,6 +71,7 @@ pyjwt = "==2.10.1"
 pyyaml = "==6.0.2"
 uvicorn = "==0.34.0"
 uvloop = "==0.21.0"
+python-magic = "==0.4.27"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "==4.1.0"

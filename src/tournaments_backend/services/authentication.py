@@ -3,7 +3,7 @@ import traceback
 
 import odoo
 from odoo.api import Environment
-from tournaments_backend.errors.backend import AuthenticationError
+from tournaments_backend.errors.services import AuthenticationError
 
 _logger = logging.getLogger(__name__)
 
